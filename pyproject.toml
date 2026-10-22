@@ -1,0 +1,17 @@
+[project]
+name = "grade-analytics"
+version = "1.0.0"
+description = "Student Grade Analytics Tool built on Python's advanced collections"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["grade_analytics", "scripts", "tests"]
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_decorators = false
