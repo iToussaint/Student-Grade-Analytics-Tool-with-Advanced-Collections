@@ -1,0 +1,313 @@
+student_id,name,major,year,course_code,course_name,credits,semester,score
+S0001,Yaw Mensah,Computer Science,3,CS101,Introduction to Programming,4,2023-S1,73
+S0001,Yaw Mensah,Computer Science,3,GE101,Academic Writing,2,2023-S1,73
+S0001,Yaw Mensah,Computer Science,3,GE201,Statistics for Everyone,3,2023-S1,78
+S0001,Yaw Mensah,Computer Science,3,GE101,Academic Writing,2,2023-S2,78
+S0001,Yaw Mensah,Computer Science,3,CS101,Introduction to Programming,4,2023-S2,74
+S0001,Yaw Mensah,Computer Science,3,CS201,Data Structures,4,2023-S2,66
+S0001,Yaw Mensah,Computer Science,3,CS310,Databases,3,2024-S1,68
+S0001,Yaw Mensah,Computer Science,3,CS201,Data Structures,4,2024-S1,71
+S0001,Yaw Mensah,Computer Science,3,GE201,Statistics for Everyone,3,2024-S1,88
+S0001,Yaw Mensah,Computer Science,3,GE201,Statistics for Everyone,3,2024-S2,79
+S0001,Yaw Mensah,Computer Science,3,CS310,Databases,3,2024-S2,78
+S0001,Yaw Mensah,Computer Science,3,CS301,Algorithms,3,2024-S2,82
+S0002,Abena Okafor,Mathematics,1,MA301,Probability Theory,3,2024-S1,71
+S0002,Abena Okafor,Mathematics,1,GE101,Academic Writing,2,2024-S1,59
+S0002,Abena Okafor,Mathematics,1,GE201,Statistics for Everyone,3,2024-S1,52
+S0002,Abena Okafor,Mathematics,1,MA310,Numerical Methods,3,2024-S2,66
+S0002,Abena Okafor,Mathematics,1,MA101,Calculus I,4,2024-S2,73
+S0002,Abena Okafor,Mathematics,1,MA301,Probability Theory,3,2024-S2,62
+S0003,Ibrahim Kamara,Business,2,BU201,Financial Accounting,3,2023-S1,81
+S0003,Ibrahim Kamara,Business,2,BU301,Marketing Strategy,3,2023-S1,64
+S0003,Ibrahim Kamara,Business,2,BU101,Principles of Management,3,2023-S1,68
+S0003,Ibrahim Kamara,Business,2,BU301,Marketing Strategy,3,2023-S2,77
+S0003,Ibrahim Kamara,Business,2,BU201,Financial Accounting,3,2023-S2,67
+S0003,Ibrahim Kamara,Business,2,GE201,Statistics for Everyone,3,2023-S2,80
+S0003,Ibrahim Kamara,Business,2,GE201,Statistics for Everyone,3,2024-S1,67
+S0003,Ibrahim Kamara,Business,2,BU101,Principles of Management,3,2024-S1,71
+S0003,Ibrahim Kamara,Business,2,BU201,Financial Accounting,3,2024-S1,67
+S0003,Ibrahim Kamara,Business,2,GE201,Statistics for Everyone,3,2024-S2,72
+S0003,Ibrahim Kamara,Business,2,GE101,Academic Writing,2,2024-S2,66
+S0003,Ibrahim Kamara,Business,2,BU201,Financial Accounting,3,2024-S2,60
+S0004,Kwame Asante,Computer Science,1,CS101,Introduction to Programming,4,2024-S1,79
+S0004,Kwame Asante,Computer Science,1,CS201,Data Structures,4,2024-S1,84
+S0004,Kwame Asante,Computer Science,1,CS301,Algorithms,3,2024-S1,84
+S0004,Kwame Asante,Computer Science,1,CS201,Data Structures,4,2024-S2,69
+S0004,Kwame Asante,Computer Science,1,CS301,Algorithms,3,2024-S2,75
+S0004,Kwame Asante,Computer Science,1,GE201,Statistics for Everyone,3,2024-S2,82
+S0005,Zainab Bello,Mathematics,4,MA201,Linear Algebra,3,2023-S1,83
+S0005,Zainab Bello,Mathematics,4,GE201,Statistics for Everyone,3,2023-S1,82
+S0005,Zainab Bello,Mathematics,4,MA310,Numerical Methods,3,2023-S1,88
+S0005,Zainab Bello,Mathematics,4,GE201,Statistics for Everyone,3,2023-S2,85
+S0005,Zainab Bello,Mathematics,4,MA310,Numerical Methods,3,2023-S2,74
+S0005,Zainab Bello,Mathematics,4,MA101,Calculus I,4,2023-S2,85
+S0005,Zainab Bello,Mathematics,4,MA310,Numerical Methods,3,2024-S1,90
+S0005,Zainab Bello,Mathematics,4,GE101,Academic Writing,2,2024-S1,76
+S0005,Zainab Bello,Mathematics,4,MA301,Probability Theory,3,2024-S1,88
+S0005,Zainab Bello,Mathematics,4,GE201,Statistics for Everyone,3,2024-S2,77
+S0005,Zainab Bello,Mathematics,4,GE101,Academic Writing,2,2024-S2,77
+S0005,Zainab Bello,Mathematics,4,MA301,Probability Theory,3,2024-S2,71
+S0006,Tunde Traore,Business,2,GE201,Statistics for Everyone,3,2023-S1,50
+S0006,Tunde Traore,Business,2,BU301,Marketing Strategy,3,2023-S1,52
+S0006,Tunde Traore,Business,2,BU201,Financial Accounting,3,2023-S1,44
+S0006,Tunde Traore,Business,2,GE101,Academic Writing,2,2023-S2,46
+S0006,Tunde Traore,Business,2,GE201,Statistics for Everyone,3,2023-S2,60
+S0006,Tunde Traore,Business,2,BU201,Financial Accounting,3,2023-S2,63
+S0006,Tunde Traore,Business,2,GE101,Academic Writing,2,2024-S1,51
+S0006,Tunde Traore,Business,2,GE201,Statistics for Everyone,3,2024-S1,52
+S0006,Tunde Traore,Business,2,BU101,Principles of Management,3,2024-S1,61
+S0006,Tunde Traore,Business,2,BU301,Marketing Strategy,3,2024-S2,62
+S0006,Tunde Traore,Business,2,BU201,Financial Accounting,3,2024-S2,58
+S0006,Tunde Traore,Business,2,BU101,Principles of Management,3,2024-S2,66
+S0007,Fatima Okafor,Computer Science,4,GE101,Academic Writing,2,2023-S1,76
+S0007,Fatima Okafor,Computer Science,4,CS201,Data Structures,4,2023-S1,72
+S0007,Fatima Okafor,Computer Science,4,GE201,Statistics for Everyone,3,2023-S1,88
+S0007,Fatima Okafor,Computer Science,4,GE101,Academic Writing,2,2023-S2,84
+S0007,Fatima Okafor,Computer Science,4,CS310,Databases,3,2023-S2,87
+S0007,Fatima Okafor,Computer Science,4,CS201,Data Structures,4,2023-S2,73
+S0007,Fatima Okafor,Computer Science,4,GE201,Statistics for Everyone,3,2024-S1,64
+S0007,Fatima Okafor,Computer Science,4,CS201,Data Structures,4,2024-S1,77
+S0007,Fatima Okafor,Computer Science,4,CS301,Algorithms,3,2024-S1,62
+S0007,Fatima Okafor,Computer Science,4,CS310,Databases,3,2024-S2,74
+S0007,Fatima Okafor,Computer Science,4,CS101,Introduction to Programming,4,2024-S2,66
+S0007,Fatima Okafor,Computer Science,4,CS201,Data Structures,4,2024-S2,70
+S0008,Naledi Adeyemi,Mathematics,2,GE201,Statistics for Everyone,3,2023-S1,74
+S0008,Naledi Adeyemi,Mathematics,2,MA101,Calculus I,4,2023-S1,74
+S0008,Naledi Adeyemi,Mathematics,2,MA201,Linear Algebra,3,2023-S1,70
+S0008,Naledi Adeyemi,Mathematics,2,MA301,Probability Theory,3,2023-S2,79
+S0008,Naledi Adeyemi,Mathematics,2,MA310,Numerical Methods,3,2023-S2,64
+S0008,Naledi Adeyemi,Mathematics,2,MA201,Linear Algebra,3,2023-S2,71
+S0008,Naledi Adeyemi,Mathematics,2,GE101,Academic Writing,2,2024-S1,73
+S0008,Naledi Adeyemi,Mathematics,2,GE201,Statistics for Everyone,3,2024-S1,80
+S0008,Naledi Adeyemi,Mathematics,2,MA310,Numerical Methods,3,2024-S1,71
+S0008,Naledi Adeyemi,Mathematics,2,GE201,Statistics for Everyone,3,2024-S2,74
+S0008,Naledi Adeyemi,Mathematics,2,MA310,Numerical Methods,3,2024-S2,67
+S0008,Naledi Adeyemi,Mathematics,2,MA301,Probability Theory,3,2024-S2,76
+S0009,Kwame Appiah,Business,1,BU101,Principles of Management,3,2024-S1,90
+S0009,Kwame Appiah,Business,1,BU201,Financial Accounting,3,2024-S1,94
+S0009,Kwame Appiah,Business,1,GE101,Academic Writing,2,2024-S1,83
+S0009,Kwame Appiah,Business,1,BU201,Financial Accounting,3,2024-S2,91
+S0009,Kwame Appiah,Business,1,BU101,Principles of Management,3,2024-S2,93
+S0009,Kwame Appiah,Business,1,BU310,Business Analytics,3,2024-S2,78
+S0010,Yaw Mensah,Computer Science,1,CS201,Data Structures,4,2024-S1,90
+S0010,Yaw Mensah,Computer Science,1,GE201,Statistics for Everyone,3,2024-S1,95
+S0010,Yaw Mensah,Computer Science,1,CS310,Databases,3,2024-S1,92
+S0010,Yaw Mensah,Computer Science,1,CS310,Databases,3,2024-S2,94
+S0010,Yaw Mensah,Computer Science,1,CS101,Introduction to Programming,4,2024-S2,92
+S0010,Yaw Mensah,Computer Science,1,GE201,Statistics for Everyone,3,2024-S2,100
+S0011,Aisha Boateng,Mathematics,4,GE101,Academic Writing,2,2023-S1,71
+S0011,Aisha Boateng,Mathematics,4,MA310,Numerical Methods,3,2023-S1,73
+S0011,Aisha Boateng,Mathematics,4,MA201,Linear Algebra,3,2023-S1,78
+S0011,Aisha Boateng,Mathematics,4,MA101,Calculus I,4,2023-S2,69
+S0011,Aisha Boateng,Mathematics,4,MA301,Probability Theory,3,2023-S2,72
+S0011,Aisha Boateng,Mathematics,4,GE201,Statistics for Everyone,3,2023-S2,67
+S0011,Aisha Boateng,Mathematics,4,GE101,Academic Writing,2,2024-S1,64
+S0011,Aisha Boateng,Mathematics,4,MA201,Linear Algebra,3,2024-S1,61
+S0011,Aisha Boateng,Mathematics,4,MA101,Calculus I,4,2024-S1,65
+S0011,Aisha Boateng,Mathematics,4,GE201,Statistics for Everyone,3,2024-S2,65
+S0011,Aisha Boateng,Mathematics,4,MA201,Linear Algebra,3,2024-S2,67
+S0011,Aisha Boateng,Mathematics,4,MA310,Numerical Methods,3,2024-S2,66
+S0012,Kofi Kamara,Business,1,GE101,Academic Writing,2,2024-S1,71
+S0012,Kofi Kamara,Business,1,GE201,Statistics for Everyone,3,2024-S1,66
+S0012,Kofi Kamara,Business,1,BU301,Marketing Strategy,3,2024-S1,66
+S0012,Kofi Kamara,Business,1,BU310,Business Analytics,3,2024-S2,61
+S0012,Kofi Kamara,Business,1,BU201,Financial Accounting,3,2024-S2,52
+S0012,Kofi Kamara,Business,1,BU301,Marketing Strategy,3,2024-S2,69
+S0013,Fatima Mensah,Computer Science,4,CS101,Introduction to Programming,4,2023-S1,62
+S0013,Fatima Mensah,Computer Science,4,GE201,Statistics for Everyone,3,2023-S1,65
+S0013,Fatima Mensah,Computer Science,4,CS201,Data Structures,4,2023-S1,64
+S0013,Fatima Mensah,Computer Science,4,CS201,Data Structures,4,2023-S2,65
+S0013,Fatima Mensah,Computer Science,4,CS301,Algorithms,3,2023-S2,70
+S0013,Fatima Mensah,Computer Science,4,GE101,Academic Writing,2,2023-S2,73
+S0013,Fatima Mensah,Computer Science,4,GE201,Statistics for Everyone,3,2024-S1,57
+S0013,Fatima Mensah,Computer Science,4,CS301,Algorithms,3,2024-S1,55
+S0013,Fatima Mensah,Computer Science,4,CS101,Introduction to Programming,4,2024-S1,64
+S0013,Fatima Mensah,Computer Science,4,CS201,Data Structures,4,2024-S2,58
+S0013,Fatima Mensah,Computer Science,4,CS301,Algorithms,3,2024-S2,67
+S0013,Fatima Mensah,Computer Science,4,CS101,Introduction to Programming,4,2024-S2,53
+S0014,Esi Boateng,Mathematics,3,MA201,Linear Algebra,3,2023-S1,63
+S0014,Esi Boateng,Mathematics,3,MA301,Probability Theory,3,2023-S1,76
+S0014,Esi Boateng,Mathematics,3,MA310,Numerical Methods,3,2023-S1,71
+S0014,Esi Boateng,Mathematics,3,MA301,Probability Theory,3,2023-S2,63
+S0014,Esi Boateng,Mathematics,3,MA101,Calculus I,4,2023-S2,59
+S0014,Esi Boateng,Mathematics,3,GE101,Academic Writing,2,2023-S2,63
+S0014,Esi Boateng,Mathematics,3,MA301,Probability Theory,3,2024-S1,52
+S0014,Esi Boateng,Mathematics,3,MA201,Linear Algebra,3,2024-S1,56
+S0014,Esi Boateng,Mathematics,3,MA310,Numerical Methods,3,2024-S1,60
+S0014,Esi Boateng,Mathematics,3,GE201,Statistics for Everyone,3,2024-S2,56
+S0014,Esi Boateng,Mathematics,3,MA201,Linear Algebra,3,2024-S2,59
+S0014,Esi Boateng,Mathematics,3,MA101,Calculus I,4,2024-S2,49
+S0015,Esi Traore,Business,2,BU101,Principles of Management,3,2023-S1,79
+S0015,Esi Traore,Business,2,BU301,Marketing Strategy,3,2023-S1,74
+S0015,Esi Traore,Business,2,BU201,Financial Accounting,3,2023-S1,78
+S0015,Esi Traore,Business,2,BU310,Business Analytics,3,2023-S2,89
+S0015,Esi Traore,Business,2,GE101,Academic Writing,2,2023-S2,87
+S0015,Esi Traore,Business,2,BU201,Financial Accounting,3,2023-S2,81
+S0015,Esi Traore,Business,2,BU201,Financial Accounting,3,2024-S1,93
+S0015,Esi Traore,Business,2,GE201,Statistics for Everyone,3,2024-S1,85
+S0015,Esi Traore,Business,2,BU310,Business Analytics,3,2024-S1,77
+S0015,Esi Traore,Business,2,GE201,Statistics for Everyone,3,2024-S2,96
+S0015,Esi Traore,Business,2,BU201,Financial Accounting,3,2024-S2,89
+S0015,Esi Traore,Business,2,BU301,Marketing Strategy,3,2024-S2,92
+S0016,Ama Ndlovu,Computer Science,1,CS310,Databases,3,2024-S1,83
+S0016,Ama Ndlovu,Computer Science,1,CS301,Algorithms,3,2024-S1,67
+S0016,Ama Ndlovu,Computer Science,1,GE101,Academic Writing,2,2024-S1,80
+S0016,Ama Ndlovu,Computer Science,1,CS310,Databases,3,2024-S2,85
+S0016,Ama Ndlovu,Computer Science,1,CS301,Algorithms,3,2024-S2,87
+S0016,Ama Ndlovu,Computer Science,1,GE101,Academic Writing,2,2024-S2,65
+S0017,Zainab Nwosu,Mathematics,4,MA301,Probability Theory,3,2023-S1,70
+S0017,Zainab Nwosu,Mathematics,4,MA101,Calculus I,4,2023-S1,63
+S0017,Zainab Nwosu,Mathematics,4,GE101,Academic Writing,2,2023-S1,52
+S0017,Zainab Nwosu,Mathematics,4,MA101,Calculus I,4,2023-S2,54
+S0017,Zainab Nwosu,Mathematics,4,GE201,Statistics for Everyone,3,2023-S2,56
+S0017,Zainab Nwosu,Mathematics,4,MA310,Numerical Methods,3,2023-S2,71
+S0017,Zainab Nwosu,Mathematics,4,MA310,Numerical Methods,3,2024-S1,52
+S0017,Zainab Nwosu,Mathematics,4,GE101,Academic Writing,2,2024-S1,63
+S0017,Zainab Nwosu,Mathematics,4,MA101,Calculus I,4,2024-S1,58
+S0017,Zainab Nwosu,Mathematics,4,MA101,Calculus I,4,2024-S2,63
+S0017,Zainab Nwosu,Mathematics,4,GE101,Academic Writing,2,2024-S2,52
+S0017,Zainab Nwosu,Mathematics,4,MA201,Linear Algebra,3,2024-S2,55
+S0018,Abena Kamara,Business,3,BU301,Marketing Strategy,3,2023-S1,69
+S0018,Abena Kamara,Business,3,GE101,Academic Writing,2,2023-S1,67
+S0018,Abena Kamara,Business,3,GE201,Statistics for Everyone,3,2023-S1,69
+S0018,Abena Kamara,Business,3,BU201,Financial Accounting,3,2023-S2,63
+S0018,Abena Kamara,Business,3,BU310,Business Analytics,3,2023-S2,65
+S0018,Abena Kamara,Business,3,GE101,Academic Writing,2,2023-S2,59
+S0018,Abena Kamara,Business,3,GE101,Academic Writing,2,2024-S1,60
+S0018,Abena Kamara,Business,3,GE201,Statistics for Everyone,3,2024-S1,76
+S0018,Abena Kamara,Business,3,BU301,Marketing Strategy,3,2024-S1,68
+S0018,Abena Kamara,Business,3,GE101,Academic Writing,2,2024-S2,72
+S0018,Abena Kamara,Business,3,GE201,Statistics for Everyone,3,2024-S2,62
+S0018,Abena Kamara,Business,3,BU301,Marketing Strategy,3,2024-S2,70
+S0019,Nadia Adeyemi,Computer Science,4,GE201,Statistics for Everyone,3,2023-S1,78
+S0019,Nadia Adeyemi,Computer Science,4,CS201,Data Structures,4,2023-S1,89
+S0019,Nadia Adeyemi,Computer Science,4,CS101,Introduction to Programming,4,2023-S1,78
+S0019,Nadia Adeyemi,Computer Science,4,CS201,Data Structures,4,2023-S2,72
+S0019,Nadia Adeyemi,Computer Science,4,CS301,Algorithms,3,2023-S2,75
+S0019,Nadia Adeyemi,Computer Science,4,GE201,Statistics for Everyone,3,2023-S2,71
+S0019,Nadia Adeyemi,Computer Science,4,CS101,Introduction to Programming,4,2024-S1,60
+S0019,Nadia Adeyemi,Computer Science,4,CS201,Data Structures,4,2024-S1,61
+S0019,Nadia Adeyemi,Computer Science,4,CS310,Databases,3,2024-S1,56
+S0019,Nadia Adeyemi,Computer Science,4,GE101,Academic Writing,2,2024-S2,65
+S0019,Nadia Adeyemi,Computer Science,4,CS201,Data Structures,4,2024-S2,57
+S0019,Nadia Adeyemi,Computer Science,4,CS310,Databases,3,2024-S2,62
+S0020,Amara Mutua,Mathematics,1,GE201,Statistics for Everyone,3,2024-S1,79
+S0020,Amara Mutua,Mathematics,1,GE101,Academic Writing,2,2024-S1,77
+S0020,Amara Mutua,Mathematics,1,MA310,Numerical Methods,3,2024-S1,79
+S0020,Amara Mutua,Mathematics,1,MA310,Numerical Methods,3,2024-S2,68
+S0020,Amara Mutua,Mathematics,1,GE101,Academic Writing,2,2024-S2,85
+S0020,Amara Mutua,Mathematics,1,MA301,Probability Theory,3,2024-S2,69
+S0021,Obinna Ndlovu,Business,4,BU201,Financial Accounting,3,2023-S1,79
+S0021,Obinna Ndlovu,Business,4,BU310,Business Analytics,3,2023-S1,84
+S0021,Obinna Ndlovu,Business,4,GE101,Academic Writing,2,2023-S1,73
+S0021,Obinna Ndlovu,Business,4,GE101,Academic Writing,2,2023-S2,69
+S0021,Obinna Ndlovu,Business,4,BU310,Business Analytics,3,2023-S2,76
+S0021,Obinna Ndlovu,Business,4,BU201,Financial Accounting,3,2023-S2,79
+S0021,Obinna Ndlovu,Business,4,BU301,Marketing Strategy,3,2024-S1,67
+S0021,Obinna Ndlovu,Business,4,BU201,Financial Accounting,3,2024-S1,85
+S0021,Obinna Ndlovu,Business,4,GE201,Statistics for Everyone,3,2024-S1,77
+S0021,Obinna Ndlovu,Business,4,BU310,Business Analytics,3,2024-S2,73
+S0021,Obinna Ndlovu,Business,4,BU201,Financial Accounting,3,2024-S2,77
+S0021,Obinna Ndlovu,Business,4,GE101,Academic Writing,2,2024-S2,74
+S0022,Malik Owusu,Computer Science,4,CS310,Databases,3,2023-S1,96
+S0022,Malik Owusu,Computer Science,4,GE101,Academic Writing,2,2023-S1,82
+S0022,Malik Owusu,Computer Science,4,CS101,Introduction to Programming,4,2023-S1,89
+S0022,Malik Owusu,Computer Science,4,CS301,Algorithms,3,2023-S2,92
+S0022,Malik Owusu,Computer Science,4,GE201,Statistics for Everyone,3,2023-S2,100
+S0022,Malik Owusu,Computer Science,4,CS310,Databases,3,2023-S2,80
+S0022,Malik Owusu,Computer Science,4,CS310,Databases,3,2024-S1,89
+S0022,Malik Owusu,Computer Science,4,GE101,Academic Writing,2,2024-S1,94
+S0022,Malik Owusu,Computer Science,4,CS201,Data Structures,4,2024-S1,87
+S0022,Malik Owusu,Computer Science,4,GE201,Statistics for Everyone,3,2024-S2,96
+S0022,Malik Owusu,Computer Science,4,CS310,Databases,3,2024-S2,100
+S0022,Malik Owusu,Computer Science,4,CS201,Data Structures,4,2024-S2,84
+S0023,Obinna Adeyemi,Mathematics,1,GE201,Statistics for Everyone,3,2024-S1,82
+S0023,Obinna Adeyemi,Mathematics,1,MA101,Calculus I,4,2024-S1,82
+S0023,Obinna Adeyemi,Mathematics,1,GE101,Academic Writing,2,2024-S1,82
+S0023,Obinna Adeyemi,Mathematics,1,MA310,Numerical Methods,3,2024-S2,83
+S0023,Obinna Adeyemi,Mathematics,1,MA301,Probability Theory,3,2024-S2,77
+S0023,Obinna Adeyemi,Mathematics,1,MA201,Linear Algebra,3,2024-S2,84
+S0024,Ama Boateng,Business,4,BU101,Principles of Management,3,2023-S1,80
+S0024,Ama Boateng,Business,4,GE101,Academic Writing,2,2023-S1,74
+S0024,Ama Boateng,Business,4,GE201,Statistics for Everyone,3,2023-S1,68
+S0024,Ama Boateng,Business,4,GE201,Statistics for Everyone,3,2023-S2,67
+S0024,Ama Boateng,Business,4,BU101,Principles of Management,3,2023-S2,79
+S0024,Ama Boateng,Business,4,GE101,Academic Writing,2,2023-S2,74
+S0024,Ama Boateng,Business,4,BU101,Principles of Management,3,2024-S1,77
+S0024,Ama Boateng,Business,4,GE101,Academic Writing,2,2024-S1,83
+S0024,Ama Boateng,Business,4,BU201,Financial Accounting,3,2024-S1,87
+S0024,Ama Boateng,Business,4,BU310,Business Analytics,3,2024-S2,87
+S0024,Ama Boateng,Business,4,BU301,Marketing Strategy,3,2024-S2,81
+S0024,Ama Boateng,Business,4,GE101,Academic Writing,2,2024-S2,84
+S0025,Yaw Mutua,Computer Science,2,CS101,Introduction to Programming,4,2023-S1,71
+S0025,Yaw Mutua,Computer Science,2,CS301,Algorithms,3,2023-S1,84
+S0025,Yaw Mutua,Computer Science,2,CS310,Databases,3,2023-S1,86
+S0025,Yaw Mutua,Computer Science,2,GE201,Statistics for Everyone,3,2023-S2,82
+S0025,Yaw Mutua,Computer Science,2,CS201,Data Structures,4,2023-S2,76
+S0025,Yaw Mutua,Computer Science,2,CS101,Introduction to Programming,4,2023-S2,73
+S0025,Yaw Mutua,Computer Science,2,GE201,Statistics for Everyone,3,2024-S1,80
+S0025,Yaw Mutua,Computer Science,2,GE101,Academic Writing,2,2024-S1,70
+S0025,Yaw Mutua,Computer Science,2,CS101,Introduction to Programming,4,2024-S1,85
+S0025,Yaw Mutua,Computer Science,2,GE201,Statistics for Everyone,3,2024-S2,79
+S0025,Yaw Mutua,Computer Science,2,CS301,Algorithms,3,2024-S2,72
+S0025,Yaw Mutua,Computer Science,2,CS101,Introduction to Programming,4,2024-S2,77
+S0026,Sekou Ndlovu,Mathematics,4,GE201,Statistics for Everyone,3,2023-S1,83
+S0026,Sekou Ndlovu,Mathematics,4,MA310,Numerical Methods,3,2023-S1,96
+S0026,Sekou Ndlovu,Mathematics,4,MA201,Linear Algebra,3,2023-S1,97
+S0026,Sekou Ndlovu,Mathematics,4,GE101,Academic Writing,2,2023-S2,95
+S0026,Sekou Ndlovu,Mathematics,4,MA310,Numerical Methods,3,2023-S2,87
+S0026,Sekou Ndlovu,Mathematics,4,GE201,Statistics for Everyone,3,2023-S2,100
+S0026,Sekou Ndlovu,Mathematics,4,MA301,Probability Theory,3,2024-S1,100
+S0026,Sekou Ndlovu,Mathematics,4,GE201,Statistics for Everyone,3,2024-S1,98
+S0026,Sekou Ndlovu,Mathematics,4,MA201,Linear Algebra,3,2024-S1,100
+S0026,Sekou Ndlovu,Mathematics,4,MA310,Numerical Methods,3,2024-S2,100
+S0026,Sekou Ndlovu,Mathematics,4,GE101,Academic Writing,2,2024-S2,100
+S0026,Sekou Ndlovu,Mathematics,4,GE201,Statistics for Everyone,3,2024-S2,100
+S0027,Abena Diallo,Business,4,BU301,Marketing Strategy,3,2023-S1,71
+S0027,Abena Diallo,Business,4,GE201,Statistics for Everyone,3,2023-S1,75
+S0027,Abena Diallo,Business,4,GE101,Academic Writing,2,2023-S1,79
+S0027,Abena Diallo,Business,4,BU310,Business Analytics,3,2023-S2,86
+S0027,Abena Diallo,Business,4,GE201,Statistics for Everyone,3,2023-S2,79
+S0027,Abena Diallo,Business,4,BU201,Financial Accounting,3,2023-S2,74
+S0027,Abena Diallo,Business,4,BU310,Business Analytics,3,2024-S1,90
+S0027,Abena Diallo,Business,4,GE201,Statistics for Everyone,3,2024-S1,89
+S0027,Abena Diallo,Business,4,BU101,Principles of Management,3,2024-S1,85
+S0027,Abena Diallo,Business,4,GE101,Academic Writing,2,2024-S2,86
+S0027,Abena Diallo,Business,4,BU301,Marketing Strategy,3,2024-S2,86
+S0027,Abena Diallo,Business,4,BU310,Business Analytics,3,2024-S2,89
+S0028,Malik Nwosu,Computer Science,3,CS301,Algorithms,3,2023-S1,71
+S0028,Malik Nwosu,Computer Science,3,CS201,Data Structures,4,2023-S1,67
+S0028,Malik Nwosu,Computer Science,3,CS101,Introduction to Programming,4,2023-S1,71
+S0028,Malik Nwosu,Computer Science,3,GE201,Statistics for Everyone,3,2023-S2,55
+S0028,Malik Nwosu,Computer Science,3,CS201,Data Structures,4,2023-S2,71
+S0028,Malik Nwosu,Computer Science,3,GE101,Academic Writing,2,2023-S2,77
+S0028,Malik Nwosu,Computer Science,3,GE201,Statistics for Everyone,3,2024-S1,79
+S0028,Malik Nwosu,Computer Science,3,GE101,Academic Writing,2,2024-S1,67
+S0028,Malik Nwosu,Computer Science,3,CS301,Algorithms,3,2024-S1,66
+S0028,Malik Nwosu,Computer Science,3,CS301,Algorithms,3,2024-S2,72
+S0028,Malik Nwosu,Computer Science,3,CS101,Introduction to Programming,4,2024-S2,64
+S0028,Malik Nwosu,Computer Science,3,CS201,Data Structures,4,2024-S2,82
+S0029,Malik Boateng,Mathematics,2,MA101,Calculus I,4,2023-S1,58
+S0029,Malik Boateng,Mathematics,2,GE201,Statistics for Everyone,3,2023-S1,65
+S0029,Malik Boateng,Mathematics,2,MA301,Probability Theory,3,2023-S1,65
+S0029,Malik Boateng,Mathematics,2,MA310,Numerical Methods,3,2023-S2,63
+S0029,Malik Boateng,Mathematics,2,MA101,Calculus I,4,2023-S2,59
+S0029,Malik Boateng,Mathematics,2,GE101,Academic Writing,2,2023-S2,62
+S0029,Malik Boateng,Mathematics,2,GE201,Statistics for Everyone,3,2024-S1,62
+S0029,Malik Boateng,Mathematics,2,MA101,Calculus I,4,2024-S1,64
+S0029,Malik Boateng,Mathematics,2,MA201,Linear Algebra,3,2024-S1,52
+S0029,Malik Boateng,Mathematics,2,MA101,Calculus I,4,2024-S2,73
+S0029,Malik Boateng,Mathematics,2,GE101,Academic Writing,2,2024-S2,46
+S0029,Malik Boateng,Mathematics,2,MA310,Numerical Methods,3,2024-S2,48
+S0030,Kofi Mutua,Business,4,GE101,Academic Writing,2,2023-S1,63
+S0030,Kofi Mutua,Business,4,BU310,Business Analytics,3,2023-S1,64
+S0030,Kofi Mutua,Business,4,BU301,Marketing Strategy,3,2023-S1,67
+S0030,Kofi Mutua,Business,4,BU201,Financial Accounting,3,2023-S2,65
+S0030,Kofi Mutua,Business,4,GE201,Statistics for Everyone,3,2023-S2,64
+S0030,Kofi Mutua,Business,4,BU301,Marketing Strategy,3,2023-S2,63
+S0030,Kofi Mutua,Business,4,BU201,Financial Accounting,3,2024-S1,70
+S0030,Kofi Mutua,Business,4,GE101,Academic Writing,2,2024-S1,72
+S0030,Kofi Mutua,Business,4,BU101,Principles of Management,3,2024-S1,64
+S0030,Kofi Mutua,Business,4,BU101,Principles of Management,3,2024-S2,61
+S0030,Kofi Mutua,Business,4,BU201,Financial Accounting,3,2024-S2,65
+S0030,Kofi Mutua,Business,4,BU301,Marketing Strategy,3,2024-S2,58
