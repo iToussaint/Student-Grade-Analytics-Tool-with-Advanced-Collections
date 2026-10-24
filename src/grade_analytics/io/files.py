@@ -10,17 +10,18 @@ from __future__ import annotations
 import csv
 import json
 import logging
+from collections.abc import Iterator, Mapping
 from pathlib import Path
-from typing import Any, Dict, Iterator, List, Mapping, Union
+from typing import Any
 
 from grade_analytics.models.entities import GradeRecord, parse_score
 
 logger = logging.getLogger(__name__)
 
 # Paths may be given as plain strings (e.g. from the CLI) or as Path objects.
-PathInput = Union[str, Path]
+PathInput = str | Path
 
-REQUIRED_COLUMNS: List[str] = [
+REQUIRED_COLUMNS: list[str] = [
     "student_id",
     "name",
     "major",
@@ -48,7 +49,7 @@ def parse_row(row: Mapping[str, str]) -> GradeRecord:
     Raises:
         ValueError: If a field is missing, empty or has an invalid value.
     """
-    values: Dict[str, str] = {}
+    values: dict[str, str] = {}
     for column in REQUIRED_COLUMNS:
         value = (row.get(column) or "").strip()
         if not value:
@@ -97,9 +98,7 @@ def iter_records(path: PathInput) -> Iterator[GradeRecord]:
     csv_path = _to_path(path)
     # Windows reports directories as PermissionError, so check explicitly.
     if csv_path.is_dir():
-        raise DataFileError(
-            f"Expected a file but found a directory: {csv_path}"
-        )
+        raise DataFileError(f"Expected a file but found a directory: {csv_path}")
     try:
         with csv_path.open("r", newline="", encoding="utf-8") as handle:
             reader = csv.DictReader(handle)
@@ -107,8 +106,7 @@ def iter_records(path: PathInput) -> Iterator[GradeRecord]:
             missing = [c for c in REQUIRED_COLUMNS if c not in columns]
             if missing:
                 raise DataFileError(
-                    f"{csv_path} is missing required columns: "
-                    f"{', '.join(missing)}"
+                    f"{csv_path} is missing required columns: {', '.join(missing)}"
                 )
             for line_number, row in enumerate(reader, start=2):
                 try:
@@ -122,19 +120,15 @@ def iter_records(path: PathInput) -> Iterator[GradeRecord]:
     except PermissionError as exc:
         raise DataFileError(f"Permission denied reading: {csv_path}") from exc
     except UnicodeDecodeError as exc:
-        raise DataFileError(
-            f"{csv_path} is not a valid UTF-8 text file"
-        ) from exc
+        raise DataFileError(f"{csv_path} is not a valid UTF-8 text file") from exc
 
 
-def load_records(path: PathInput) -> List[GradeRecord]:
+def load_records(path: PathInput) -> list[GradeRecord]:
     """Read every valid record from a CSV file into a list."""
     return list(iter_records(path))
 
 
-def write_json(
-    data: Mapping[str, Any], path: PathInput, indent: int = 2
-) -> Path:
+def write_json(data: Mapping[str, Any], path: PathInput, indent: int = 2) -> Path:
     """Write a JSON document, creating parent directories if needed.
 
     Args:

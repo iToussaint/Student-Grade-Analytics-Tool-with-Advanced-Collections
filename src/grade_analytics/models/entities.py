@@ -9,23 +9,23 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Dict, List, NamedTuple, Optional, Union
+from typing import NamedTuple
 
 # A numeric score may arrive as text (CSV) or as a number (code / JSON).
-ScoreInput = Union[str, int, float]
+ScoreInput = str | int | float
 
 MIN_SCORE: float = 0.0
 MAX_SCORE: float = 100.0
 
 # Lower bound (inclusive) of each letter grade, best grade first.
-LETTER_THRESHOLDS: Dict[str, float] = {
+LETTER_THRESHOLDS: dict[str, float] = {
     "A": 90.0,
     "B": 80.0,
     "C": 70.0,
     "D": 60.0,
     "F": 0.0,
 }
-LETTER_GRADES: List[str] = list(LETTER_THRESHOLDS)
+LETTER_GRADES: list[str] = list(LETTER_THRESHOLDS)
 
 
 def parse_score(value: ScoreInput) -> float:
@@ -45,9 +45,7 @@ def parse_score(value: ScoreInput) -> float:
     except (TypeError, ValueError) as exc:
         raise ValueError(f"Invalid score: {value!r}") from exc
     if not MIN_SCORE <= score <= MAX_SCORE:
-        raise ValueError(
-            f"Score {score} is outside the range {MIN_SCORE}-{MAX_SCORE}"
-        )
+        raise ValueError(f"Score {score} is outside the range {MIN_SCORE}-{MAX_SCORE}")
     return score
 
 
@@ -109,7 +107,7 @@ class Student:
     name: str
     major: str
     year: int
-    grades: List[Grade] = field(default_factory=list)
+    grades: list[Grade] = field(default_factory=list)
 
     def add_grade(self, grade: Grade) -> None:
         """Attach a grade to this student.
@@ -119,34 +117,33 @@ class Student:
         """
         if grade.student_id != self.student_id:
             raise ValueError(
-                f"Grade for {grade.student_id} cannot be added to "
-                f"{self.student_id}"
+                f"Grade for {grade.student_id} cannot be added to {self.student_id}"
             )
         self.grades.append(grade)
 
     @property
-    def average(self) -> Optional[float]:
+    def average(self) -> float | None:
         """Mean score across all grades, or ``None`` if there are none."""
         if not self.grades:
             return None
         return sum(g.score for g in self.grades) / len(self.grades)
 
-    def best_grade(self) -> Optional[Grade]:
+    def best_grade(self) -> Grade | None:
         """Highest grade received, or ``None`` if there are none."""
         if not self.grades:
             return None
         return max(self.grades, key=lambda g: g.score)
 
-    def grade_for(self, course_code: str, semester: str) -> Optional[Grade]:
+    def grade_for(self, course_code: str, semester: str) -> Grade | None:
         """Find the grade for a course in a semester, if it exists."""
         for grade in self.grades:
             if grade.course_code == course_code and grade.semester == semester:
                 return grade
         return None
 
-    def semester_averages(self) -> Dict[str, float]:
+    def semester_averages(self) -> dict[str, float]:
         """Mean score per semester, ordered chronologically."""
-        totals: Dict[str, List[float]] = defaultdict(list)
+        totals: dict[str, list[float]] = defaultdict(list)
         for grade in self.grades:
             totals[grade.semester].append(grade.score)
         return {

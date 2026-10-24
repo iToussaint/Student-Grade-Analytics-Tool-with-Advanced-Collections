@@ -488,4 +488,16 @@ The test suite covers:
 
 ## Screenshot
 
-![Tool execution](docs/tool-execution.png)
+**CSV Data Input**
+
+![Tool execution](screenshots/csv_data.png)
+
+
+**Terminal Output**
+
+![Tool execution](screenshots/terminal_output.png)
+
+
+**JSON Report**
+
+![Tool execution](screenshots/json_report.png)

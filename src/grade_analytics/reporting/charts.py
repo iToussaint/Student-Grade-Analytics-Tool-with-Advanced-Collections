@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from typing import List, Mapping, Sequence
+from collections.abc import Mapping, Sequence
 
 from grade_analytics.reporting.report import (
     GradeReport,
@@ -38,7 +38,7 @@ def bar_chart(
     """
     if baseline:
         title = f"{title} (axis starts at {baseline:g})"
-    lines: List[str] = [title, "-" * len(title)]
+    lines: list[str] = [title, "-" * len(title)]
     if not data:
         lines.append("(no data)")
         return "\n".join(lines)
@@ -49,9 +49,7 @@ def bar_chart(
         length = round(width * (value - baseline) / span) if span > 0 else 0
         length = max(length, 0)
         bar = BAR_CHAR * length
-        lines.append(
-            f"{label:<{label_width}} | {bar} {value_format.format(value)}"
-        )
+        lines.append(f"{label:<{label_width}} | {bar} {value_format.format(value)}")
     return "\n".join(lines)
 
 
@@ -106,9 +104,7 @@ def semester_chart(
 
 def top_performers_table(entries: Sequence[RankingEntry]) -> str:
     """Fixed-width table of the top-ranked students."""
-    header = (
-        f"{'Rank':<5}{'ID':<8}{'Name':<22}{'Major':<20}{'Avg':>7}{'Pctl':>8}"
-    )
+    header = f"{'Rank':<5}{'ID':<8}{'Name':<22}{'Major':<20}{'Avg':>7}{'Pctl':>8}"
     lines = ["Top Performers", "-" * len(header), header]
     for e in entries:
         lines.append(
@@ -128,8 +124,7 @@ def render_summary(report: GradeReport, width: int = DEFAULT_WIDTH) -> str:
         major: group["average"] for major, group in report["by_major"].items()
     }
     year_averages = {
-        f"Year {year}": group["average"]
-        for year, group in report["by_year"].items()
+        f"Year {year}": group["average"] for year, group in report["by_year"].items()
     }
     sections = [
         "=" * 60,
@@ -141,9 +136,11 @@ def render_summary(report: GradeReport, width: int = DEFAULT_WIDTH) -> str:
         f"Courses     : {meta['total_courses']}",
         f"Semesters   : {', '.join(meta['semesters'])}",
         "",
-        f"Mean {summary['mean']:.2f} | Median {summary['median']:.2f} | "
-        f"Mode {mode_text} | Min {summary['minimum']:g} | "
-        f"Max {summary['maximum']:g}",
+        (
+            f"Mean {summary['mean']:.2f} | Median {summary['median']:.2f} | "
+            f"Mode {mode_text} | Min {summary['minimum']:g} | "
+            f"Max {summary['maximum']:g}"
+        ),
         "",
         distribution_chart(report["grade_distribution"], width),
         "",

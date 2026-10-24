@@ -1,13 +1,13 @@
 """Domain models: ``Student``, ``Course``, ``Grade`` and ``GradeRecord``."""
 
 from grade_analytics.models.entities import (
-    Course,
-    Grade,
-    GradeRecord,
     LETTER_GRADES,
     LETTER_THRESHOLDS,
     MAX_SCORE,
     MIN_SCORE,
+    Course,
+    Grade,
+    GradeRecord,
     ScoreInput,
     Student,
     letter_for,
@@ -15,13 +15,13 @@ from grade_analytics.models.entities import (
 )
 
 __all__ = [
-    "Course",
-    "Grade",
-    "GradeRecord",
     "LETTER_GRADES",
     "LETTER_THRESHOLDS",
     "MAX_SCORE",
     "MIN_SCORE",
+    "Course",
+    "Grade",
+    "GradeRecord",
     "ScoreInput",
     "Student",
     "letter_for",

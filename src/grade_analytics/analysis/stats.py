@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from bisect import bisect_left, bisect_right
 from collections import Counter, OrderedDict
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Mapping, Optional, Sequence
 
 from grade_analytics.analysis.aggregators import (
     RollingAverage,
@@ -43,7 +43,7 @@ def median(values: Sequence[float]) -> float:
     return (ordered[middle - 1] + ordered[middle]) / 2
 
 
-def mode(values: Iterable[float]) -> List[float]:
+def mode(values: Iterable[float]) -> list[float]:
     """Most frequent value(s), computed with ``Counter``.
 
     All values sharing the highest frequency are returned in ascending
@@ -81,12 +81,11 @@ def _percentile_from_sorted(value: float, ordered: Sequence[float]) -> float:
     return 100.0 * (below + 0.5 * equal) / len(ordered)
 
 
-def percentile_ranks(scores: Mapping[str, float]) -> Dict[str, float]:
+def percentile_ranks(scores: Mapping[str, float]) -> dict[str, float]:
     """Percentile rank of every entry, sorting the population only once."""
     ordered = sorted(scores.values())
     return {
-        key: _percentile_from_sorted(value, ordered)
-        for key, value in scores.items()
+        key: _percentile_from_sorted(value, ordered) for key, value in scores.items()
     }
 
 
@@ -104,7 +103,7 @@ class RankedStudent:
     courses_taken: int
 
 
-def rank_students(students: Iterable[Student]) -> List[RankedStudent]:
+def rank_students(students: Iterable[Student]) -> list[RankedStudent]:
     """Rank students by average score, best first.
 
     Uses standard competition ranking ("1224"): students with equal averages
@@ -112,8 +111,8 @@ def rank_students(students: Iterable[Student]) -> List[RankedStudent]:
     by student id for a deterministic order. Students without grades are
     excluded.
     """
-    averages: Dict[str, float] = {}
-    by_id: Dict[str, Student] = {}
+    averages: dict[str, float] = {}
+    by_id: dict[str, Student] = {}
     for student in students:
         average = student.average
         if average is not None:
@@ -123,8 +122,8 @@ def rank_students(students: Iterable[Student]) -> List[RankedStudent]:
     percentiles = percentile_ranks(averages)
     ordered_ids = sorted(averages, key=lambda sid: (-averages[sid], sid))
 
-    ranked: List[RankedStudent] = []
-    previous_average: Optional[float] = None
+    ranked: list[RankedStudent] = []
+    previous_average: float | None = None
     current_rank = 0
     for position, student_id in enumerate(ordered_ids, start=1):
         average = averages[student_id]
@@ -147,9 +146,7 @@ def rank_students(students: Iterable[Student]) -> List[RankedStudent]:
     return ranked
 
 
-def top_performers(
-    ranked: Sequence[RankedStudent], count: int
-) -> List[RankedStudent]:
+def top_performers(ranked: Sequence[RankedStudent], count: int) -> list[RankedStudent]:
     """The first ``count`` students of an existing ranking."""
     if count < 0:
         raise ValueError("count must not be negative")
@@ -166,9 +163,7 @@ class SemesterTrend:
     grade_count: int
 
 
-def semester_trends(
-    grades: Iterable[Grade], window: int = 3
-) -> List[SemesterTrend]:
+def semester_trends(grades: Iterable[Grade], window: int = 3) -> list[SemesterTrend]:
     """Average per semester plus a ``deque``-backed rolling average.
 
     Semesters are processed chronologically (their identifiers, such as
@@ -176,7 +171,7 @@ def semester_trends(
     """
     by_semester = scores_by_semester(grades)
     rolling = RollingAverage(window)
-    trends: List[SemesterTrend] = []
+    trends: list[SemesterTrend] = []
     for semester in sorted(by_semester):
         scores = by_semester[semester]
         semester_average = mean(scores)
@@ -191,9 +186,7 @@ def semester_trends(
     return trends
 
 
-def trend_direction(
-    values: Sequence[float], threshold: float = TREND_THRESHOLD
-) -> str:
+def trend_direction(values: Sequence[float], threshold: float = TREND_THRESHOLD) -> str:
     """Classify a chronological series as improving, declining or stable.
 
     Compares the last value with the first. A series with fewer than two
@@ -216,7 +209,7 @@ class StudentTrend:
     student_id: str
     name: str
     semester_averages: OrderedDict[str, float]
-    rolling_averages: List[float]
+    rolling_averages: list[float]
     direction: str
 
 

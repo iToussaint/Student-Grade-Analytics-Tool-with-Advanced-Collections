@@ -9,8 +9,9 @@ is stable and easy to read.
 from __future__ import annotations
 
 from collections import Counter, OrderedDict, defaultdict
-from datetime import datetime, timezone
-from typing import DefaultDict, Dict, Iterable, List, Sequence, TypedDict
+from collections.abc import Iterable, Sequence
+from datetime import UTC, datetime
+from typing import TypedDict
 
 from grade_analytics.analysis.aggregators import (
     Dataset,
@@ -22,7 +23,6 @@ from grade_analytics.analysis.aggregators import (
     ordered_distribution,
     scores_by_course,
 )
-from grade_analytics.models.entities import Grade, GradeRecord, Student
 from grade_analytics.analysis.stats import (
     RankedStudent,
     mean,
@@ -33,6 +33,7 @@ from grade_analytics.analysis.stats import (
     student_trend,
     top_performers,
 )
+from grade_analytics.models.entities import Grade, GradeRecord, Student
 
 DECIMALS = 2
 
@@ -54,7 +55,7 @@ class ReportMetadata(TypedDict):
     total_records: int
     total_students: int
     total_courses: int
-    semesters: List[str]
+    semesters: list[str]
 
 
 class SummaryStatistics(TypedDict):
@@ -72,7 +73,7 @@ class SummaryStatistics(TypedDict):
     count: int
     mean: float
     median: float
-    mode: List[float]
+    mode: list[float]
     minimum: float
     maximum: float
 
@@ -114,7 +115,7 @@ class GroupSummary(TypedDict):
     student_count: int
     average: float
     median: float
-    grade_distribution: Dict[str, int]
+    grade_distribution: dict[str, int]
 
 
 class CourseSummary(TypedDict):
@@ -135,8 +136,8 @@ class CourseSummary(TypedDict):
     enrollments: int
     mean: float
     median: float
-    mode: List[float]
-    grade_distribution: Dict[str, int]
+    mode: list[float]
+    grade_distribution: dict[str, int]
 
 
 class SemesterTrendEntry(TypedDict):
@@ -169,8 +170,8 @@ class StudentTrendEntry(TypedDict):
 
     student_id: str
     name: str
-    semester_averages: Dict[str, float]
-    rolling_averages: List[float]
+    semester_averages: dict[str, float]
+    rolling_averages: list[float]
     direction: str
 
 
@@ -179,15 +180,15 @@ class GradeReport(TypedDict):
 
     metadata: ReportMetadata
     summary: SummaryStatistics
-    grade_distribution: Dict[str, int]
-    top_performers: List[RankingEntry]
-    rankings: List[RankingEntry]
-    by_major: Dict[str, GroupSummary]
-    by_year: Dict[str, GroupSummary]
-    courses: Dict[str, CourseSummary]
-    semester_trends: List[SemesterTrendEntry]
-    student_trends: List[StudentTrendEntry]
-    trend_summary: Dict[str, int]
+    grade_distribution: dict[str, int]
+    top_performers: list[RankingEntry]
+    rankings: list[RankingEntry]
+    by_major: dict[str, GroupSummary]
+    by_year: dict[str, GroupSummary]
+    courses: dict[str, CourseSummary]
+    semester_trends: list[SemesterTrendEntry]
+    student_trends: list[StudentTrendEntry]
+    trend_summary: dict[str, int]
 
 
 def _round(value: float) -> float:
@@ -235,10 +236,10 @@ def _group_summary(students: Sequence[Student]) -> GroupSummary:
 
 def _course_summaries(
     dataset: Dataset, grades: Sequence[Grade]
-) -> Dict[str, CourseSummary]:
+) -> dict[str, CourseSummary]:
     """Statistics for every course, ordered by course code."""
     scores = scores_by_course(grades)
-    letters_by_course: DefaultDict[str, Counter[str]] = defaultdict(Counter)
+    letters_by_course: defaultdict[str, Counter[str]] = defaultdict(Counter)
     for grade in grades:
         letters_by_course[grade.course_code][grade.letter] += 1
 
@@ -253,9 +254,7 @@ def _course_summaries(
             "mean": _round(mean(course_scores)),
             "median": _round(median(course_scores)),
             "mode": [_round(value) for value in mode(course_scores)],
-            "grade_distribution": ordered_distribution(
-                letters_by_course[code]
-            ),
+            "grade_distribution": ordered_distribution(letters_by_course[code]),
         }
     return summaries
 
@@ -302,9 +301,7 @@ def build_report_from_dataset(
     return {
         "metadata": {
             "source_file": source_file,
-            "generated_at": datetime.now(timezone.utc).isoformat(
-                timespec="seconds"
-            ),
+            "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
             "total_records": dataset.record_count,
             "total_students": len(students),
             "total_courses": len(dataset.courses),
@@ -312,9 +309,7 @@ def build_report_from_dataset(
         },
         "summary": summarize_scores([grade.score for grade in grades]),
         "grade_distribution": ordered_distribution(grade_distribution(grades)),
-        "top_performers": [
-            _ranking_entry(e) for e in top_performers(ranked, top_n)
-        ],
+        "top_performers": [_ranking_entry(e) for e in top_performers(ranked, top_n)],
         "rankings": [_ranking_entry(e) for e in ranked],
         "by_major": by_major,
         "by_year": by_year,
@@ -336,9 +331,7 @@ def build_report_from_dataset(
                     (semester, _round(value))
                     for semester, value in trend.semester_averages.items()
                 ),
-                "rolling_averages": [
-                    _round(v) for v in trend.rolling_averages
-                ],
+                "rolling_averages": [_round(v) for v in trend.rolling_averages],
                 "direction": trend.direction,
             }
             for trend in per_student

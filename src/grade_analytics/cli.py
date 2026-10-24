@@ -6,7 +6,6 @@ import argparse
 import logging
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 from grade_analytics.io.files import DataFileError, iter_records, write_json
 from grade_analytics.performance.memory import (
@@ -15,8 +14,8 @@ from grade_analytics.performance.memory import (
     compare_rolling_window,
     format_comparisons,
 )
-from grade_analytics.reporting.report import build_report
 from grade_analytics.reporting.charts import render_summary
+from grade_analytics.reporting.report import build_report
 
 DEFAULT_OUTPUT = Path("reports") / "grade_report.json"
 
@@ -25,9 +24,7 @@ def _positive_int(value: str) -> int:
     """Argparse type that accepts only integers greater than zero."""
     number = int(value)
     if number < 1:
-        raise argparse.ArgumentTypeError(
-            f"expected a positive integer, got {value}"
-        )
+        raise argparse.ArgumentTypeError(f"expected a positive integer, got {value}")
     return number
 
 
@@ -35,13 +32,9 @@ def build_parser() -> argparse.ArgumentParser:
     """Create the argument parser."""
     parser = argparse.ArgumentParser(
         prog="grade_analytics",
-        description=(
-            "Analyse student grades from a CSV file and write a JSON report."
-        ),
+        description=("Analyse student grades from a CSV file and write a JSON report."),
     )
-    parser.add_argument(
-        "input", type=Path, help="CSV file with one row per grade"
-    )
+    parser.add_argument("input", type=Path, help="CSV file with one row per grade")
     parser.add_argument(
         "-o",
         "--output",
@@ -76,12 +69,10 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     """Run the tool and return a process exit code."""
     args = build_parser().parse_args(argv)
-    logging.basicConfig(
-        level=logging.WARNING, format="%(levelname)s: %(message)s"
-    )
+    logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
 
     try:
         report = build_report(

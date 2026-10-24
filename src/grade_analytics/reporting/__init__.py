@@ -23,12 +23,6 @@ from grade_analytics.reporting.report import (
 )
 
 __all__ = [
-    "bar_chart",
-    "distribution_chart",
-    "render_summary",
-    "score_baseline",
-    "semester_chart",
-    "top_performers_table",
     "CourseSummary",
     "GradeReport",
     "GroupSummary",
@@ -37,7 +31,13 @@ __all__ = [
     "SemesterTrendEntry",
     "StudentTrendEntry",
     "SummaryStatistics",
+    "bar_chart",
     "build_report",
     "build_report_from_dataset",
+    "distribution_chart",
+    "render_summary",
+    "score_baseline",
+    "semester_chart",
     "summarize_scores",
+    "top_performers_table",
 ]

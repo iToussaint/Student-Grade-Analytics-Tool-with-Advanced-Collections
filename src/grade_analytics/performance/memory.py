@@ -9,8 +9,9 @@ from __future__ import annotations
 
 import tracemalloc
 from collections import deque
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable, Deque, Dict, List
+from typing import Any
 
 from grade_analytics.io.files import PathInput, iter_records, load_records
 from grade_analytics.models.entities import GradeRecord
@@ -29,7 +30,7 @@ class MemoryComparison:
     """A group of approaches solving the same task."""
 
     task: str
-    results: List[MemoryResult]
+    results: list[MemoryResult]
 
 
 def measure_peak(func: Callable[[], Any]) -> int:
@@ -74,7 +75,7 @@ class _SlottedRecord:
     score: float
 
 
-def _sample_values(index: int) -> Dict[str, Any]:
+def _sample_values(index: int) -> dict[str, Any]:
     """Field values for the ``index``-th synthetic record."""
     return {
         "student_id": f"S{index:05d}",
@@ -92,39 +93,34 @@ def _sample_values(index: int) -> Dict[str, Any]:
 def compare_record_structures(count: int = 10_000) -> MemoryComparison:
     """Memory needed to hold ``count`` records in different structures."""
     rows = [_sample_values(i) for i in range(count)]
-    approaches: Dict[str, Callable[[], Any]] = {
+    approaches: dict[str, Callable[[], Any]] = {
         "dict": lambda: [dict(row) for row in rows],
         "dataclass": lambda: [_PlainRecord(**row) for row in rows],
-        "dataclass(slots=True)": lambda: [
-            _SlottedRecord(**row) for row in rows
-        ],
+        "dataclass(slots=True)": lambda: [_SlottedRecord(**row) for row in rows],
         "namedtuple": lambda: [GradeRecord(**row) for row in rows],
     }
     return MemoryComparison(
         task=f"Store {count:,} records",
         results=[
-            MemoryResult(name, measure_peak(fn))
-            for name, fn in approaches.items()
+            MemoryResult(name, measure_peak(fn)) for name, fn in approaches.items()
         ],
     )
 
 
-def compare_rolling_window(
-    count: int = 100_000, window: int = 3
-) -> MemoryComparison:
+def compare_rolling_window(count: int = 100_000, window: int = 3) -> MemoryComparison:
     """Keeping a rolling window: a growing list versus ``deque(maxlen)``."""
 
-    def with_list() -> List[float]:
+    def with_list() -> list[float]:
         """Keep every value in a list and average its last ``window``."""
-        values: List[float] = []
+        values: list[float] = []
         for i in range(count):
             values.append(float(i))
             _ = sum(values[-window:]) / min(len(values), window)
         return values
 
-    def with_deque() -> Deque[float]:
+    def with_deque() -> deque[float]:
         """Keep only the last ``window`` values in a bounded deque."""
-        values: Deque[float] = deque(maxlen=window)
+        values: deque[float] = deque(maxlen=window)
         for i in range(count):
             values.append(float(i))
             _ = sum(values) / len(values)
@@ -144,7 +140,7 @@ def compare_file_loading(path: PathInput) -> MemoryComparison:
 
     def with_list() -> float:
         """Load every record into a list before averaging."""
-        records: List[GradeRecord] = load_records(path)
+        records: list[GradeRecord] = load_records(path)
         return sum(r.score for r in records) / max(len(records), 1)
 
     def with_generator() -> float:
@@ -160,14 +156,12 @@ def compare_file_loading(path: PathInput) -> MemoryComparison:
         task=f"Mean score of {path}",
         results=[
             MemoryResult("list (load_records)", measure_peak(with_list)),
-            MemoryResult(
-                "generator (iter_records)", measure_peak(with_generator)
-            ),
+            MemoryResult("generator (iter_records)", measure_peak(with_generator)),
         ],
     )
 
 
-def format_comparisons(comparisons: List[MemoryComparison]) -> str:
+def format_comparisons(comparisons: list[MemoryComparison]) -> str:
     """Human-readable table of memory comparisons."""
     lines = ["MEMORY USAGE COMPARISON", "=" * 60]
     for comparison in comparisons:

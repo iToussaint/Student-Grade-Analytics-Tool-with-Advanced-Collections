@@ -1,9 +1,9 @@
 """File input and output: streaming CSV reader and JSON report writer."""
 
 from grade_analytics.io.files import (
+    REQUIRED_COLUMNS,
     DataFileError,
     PathInput,
-    REQUIRED_COLUMNS,
     iter_records,
     load_records,
     parse_row,
@@ -11,9 +11,9 @@ from grade_analytics.io.files import (
 )
 
 __all__ = [
+    "REQUIRED_COLUMNS",
     "DataFileError",
     "PathInput",
-    "REQUIRED_COLUMNS",
     "iter_records",
     "load_records",
     "parse_row",

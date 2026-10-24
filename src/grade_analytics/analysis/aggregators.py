@@ -11,8 +11,8 @@ Each helper relies on a specific type from :mod:`collections`:
 from __future__ import annotations
 
 from collections import Counter, OrderedDict, defaultdict, deque
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Deque, DefaultDict, Dict, Iterable, List, Optional
 
 from grade_analytics.models.entities import (
     LETTER_GRADES,
@@ -27,8 +27,8 @@ from grade_analytics.models.entities import (
 class Dataset:
     """Students and courses aggregated from grade records."""
 
-    students: Dict[str, Student] = field(default_factory=dict)
-    courses: Dict[str, Course] = field(default_factory=dict)
+    students: dict[str, Student] = field(default_factory=dict)
+    courses: dict[str, Course] = field(default_factory=dict)
     record_count: int = 0
 
     def add(self, record: GradeRecord) -> None:
@@ -75,7 +75,7 @@ def build_dataset(records: Iterable[GradeRecord]) -> Dataset:
     return dataset
 
 
-def all_grades(students: Iterable[Student]) -> List[Grade]:
+def all_grades(students: Iterable[Student]) -> list[Grade]:
     """Flatten the grades of every student into a single list."""
     return [grade for student in students for grade in student.grades]
 
@@ -92,16 +92,14 @@ def ordered_distribution(counts: Counter[str]) -> OrderedDict[str, int]:
     insertion order, so reports use an ``OrderedDict`` to guarantee a
     stable, complete A-F layout.
     """
-    return OrderedDict(
-        (letter, counts.get(letter, 0)) for letter in LETTER_GRADES
-    )
+    return OrderedDict((letter, counts.get(letter, 0)) for letter in LETTER_GRADES)
 
 
 def group_by_major(
     students: Iterable[Student],
-) -> DefaultDict[str, List[Student]]:
+) -> defaultdict[str, list[Student]]:
     """Group students by their major."""
-    groups: DefaultDict[str, List[Student]] = defaultdict(list)
+    groups: defaultdict[str, list[Student]] = defaultdict(list)
     for student in students:
         groups[student.major].append(student)
     return groups
@@ -109,17 +107,17 @@ def group_by_major(
 
 def group_by_year(
     students: Iterable[Student],
-) -> DefaultDict[int, List[Student]]:
+) -> defaultdict[int, list[Student]]:
     """Group students by their academic year."""
-    groups: DefaultDict[int, List[Student]] = defaultdict(list)
+    groups: defaultdict[int, list[Student]] = defaultdict(list)
     for student in students:
         groups[student.year].append(student)
     return groups
 
 
-def scores_by_course(grades: Iterable[Grade]) -> DefaultDict[str, List[float]]:
+def scores_by_course(grades: Iterable[Grade]) -> defaultdict[str, list[float]]:
     """Map each course code to the list of scores obtained in it."""
-    scores: DefaultDict[str, List[float]] = defaultdict(list)
+    scores: defaultdict[str, list[float]] = defaultdict(list)
     for grade in grades:
         scores[grade.course_code].append(grade.score)
     return scores
@@ -127,9 +125,9 @@ def scores_by_course(grades: Iterable[Grade]) -> DefaultDict[str, List[float]]:
 
 def scores_by_semester(
     grades: Iterable[Grade],
-) -> DefaultDict[str, List[float]]:
+) -> defaultdict[str, list[float]]:
     """Map each semester to the list of scores obtained in it."""
-    scores: DefaultDict[str, List[float]] = defaultdict(list)
+    scores: defaultdict[str, list[float]] = defaultdict(list)
     for grade in grades:
         scores[grade.semester].append(grade.score)
     return scores
@@ -155,7 +153,7 @@ class RollingAverage:
         if window < 1:
             raise ValueError("window must be at least 1")
         self.window = window
-        self._values: Deque[float] = deque(maxlen=window)
+        self._values: deque[float] = deque(maxlen=window)
         self._total = 0.0
 
     def add(self, value: float) -> float:
@@ -167,14 +165,14 @@ class RollingAverage:
         return self._total / len(self._values)
 
     @property
-    def average(self) -> Optional[float]:
+    def average(self) -> float | None:
         """Current rolling average, or ``None`` if no value was added."""
         if not self._values:
             return None
         return self._total / len(self._values)
 
     @property
-    def values(self) -> List[float]:
+    def values(self) -> list[float]:
         """Values currently inside the window, oldest first."""
         return list(self._values)
 
