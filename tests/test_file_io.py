@@ -17,7 +17,7 @@ from grade_analytics.file_io import (
     write_json,
 )
 
-HEADER = "student_id,name,major,year,course_code,course_name,credits,semester,score\n"
+from tests.conftest import HEADER
 
 
 def test_iter_records_is_a_lazy_generator(csv_file: Path) -> None:
@@ -44,7 +44,9 @@ def test_directory_raises_data_file_error(tmp_path: Path) -> None:
         load_records(tmp_path)
 
 
-def test_permission_error_is_reported(csv_file: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_permission_error_is_reported(
+    csv_file: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     def deny(*args: object, **kwargs: object) -> None:
         raise PermissionError("denied")
 
@@ -109,7 +111,9 @@ def test_write_json_to_directory_fails(tmp_path: Path) -> None:
         write_json({}, tmp_path)
 
 
-def test_write_json_permission_error(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_write_json_permission_error(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     def deny(*args: object, **kwargs: object) -> None:
         raise PermissionError("denied")
 

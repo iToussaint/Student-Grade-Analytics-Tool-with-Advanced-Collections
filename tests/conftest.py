@@ -14,7 +14,11 @@ import pytest
 from grade_analytics.aggregators import Dataset, build_dataset
 from grade_analytics.models import GradeRecord
 
-CSV_TEXT = """student_id,name,major,year,course_code,course_name,credits,semester,score
+HEADER = (
+    "student_id,name,major,year,course_code,course_name,credits,"
+    "semester,score\n"
+)
+CSV_TEXT = HEADER + """\
 S1,Alice,Computer Science,2,C1,Course One,3,2024-S1,90
 S1,Alice,Computer Science,2,C2,Course Two,4,2024-S2,100
 S2,Bob,Mathematics,1,C1,Course One,3,2024-S1,70
@@ -23,11 +27,14 @@ S3,Cara,Computer Science,1,C1,Course One,3,2024-S1,80
 S3,Cara,Computer Science,1,C2,Course Two,4,2024-S2,80
 """
 
-SAMPLE_DATA = Path(__file__).resolve().parent.parent / "data" / "sample_grades.csv"
+SAMPLE_DATA = (
+    Path(__file__).resolve().parent.parent / "data" / "sample_grades.csv"
+)
 
 
 @pytest.fixture
 def csv_file(tmp_path: Path) -> Path:
+    """The tiny dataset written to a temporary CSV file."""
     path = tmp_path / "grades.csv"
     path.write_text(CSV_TEXT, encoding="utf-8")
     return path
@@ -35,13 +42,18 @@ def csv_file(tmp_path: Path) -> Path:
 
 @pytest.fixture
 def records() -> List[GradeRecord]:
+    """The tiny dataset as ``GradeRecord`` tuples."""
     rows = [line.split(",") for line in CSV_TEXT.strip().splitlines()[1:]]
     return [
-        GradeRecord(sid, name, major, int(year), code, cname, int(credits), sem, float(score))
+        GradeRecord(
+            sid, name, major, int(year), code, cname, int(credits), sem,
+            float(score),
+        )
         for sid, name, major, year, code, cname, credits, sem, score in rows
     ]
 
 
 @pytest.fixture
 def dataset(records: List[GradeRecord]) -> Dataset:
+    """The tiny dataset aggregated into students and courses."""
     return build_dataset(records)

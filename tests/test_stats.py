@@ -68,7 +68,8 @@ class TestRanking:
 
     def test_competition_ranking_for_ties(self) -> None:
         students = []
-        for sid, score in [("S1", 90.0), ("S2", 90.0), ("S3", 70.0), ("S4", 50.0)]:
+        scores = [("S1", 90.0), ("S2", 90.0), ("S3", 70.0), ("S4", 50.0)]
+        for sid, score in scores:
             student = Student(sid, sid, "CS", 1)
             student.add_grade(Grade(sid, "C1", "2024-S1", score))
             students.append(student)
@@ -95,7 +96,9 @@ class TestTrends:
             Grade("S2", "C2", "2023-S2", 90.0),
         ]
         trends = semester_trends(grades, window=2)
-        assert [t.semester for t in trends] == ["2023-S1", "2023-S2", "2024-S2"]
+        assert [t.semester for t in trends] == [
+            "2023-S1", "2023-S2", "2024-S2",
+        ]
         assert [t.average for t in trends] == [60.0, 80.0, 80.0]
         assert [t.rolling_average for t in trends] == [60.0, 70.0, 80.0]
         assert [t.grade_count for t in trends] == [1, 2, 1]
@@ -115,10 +118,14 @@ class TestTrends:
 
     def test_student_trend(self, dataset: Dataset) -> None:
         alice = student_trend(dataset.students["S1"], window=1)
-        assert dict(alice.semester_averages) == {"2024-S1": 90.0, "2024-S2": 100.0}
+        assert dict(alice.semester_averages) == {
+            "2024-S1": 90.0, "2024-S2": 100.0,
+        }
         assert alice.direction == "improving"
-        assert student_trend(dataset.students["S2"], window=1).direction == "declining"
-        assert student_trend(dataset.students["S3"], window=1).direction == "stable"
+        bob = student_trend(dataset.students["S2"], window=1)
+        cara = student_trend(dataset.students["S3"], window=1)
+        assert bob.direction == "declining"
+        assert cara.direction == "stable"
 
     def test_student_trend_is_smoothed(self, dataset: Dataset) -> None:
         alice = student_trend(dataset.students["S1"], window=2)

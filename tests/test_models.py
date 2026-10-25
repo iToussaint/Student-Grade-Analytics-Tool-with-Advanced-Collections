@@ -19,7 +19,10 @@ from grade_analytics.models import (
 
 @pytest.mark.parametrize(
     ("score", "letter"),
-    [(100, "A"), (90, "A"), (89.99, "B"), (80, "B"), (70, "C"), (60, "D"), (59.9, "F"), (0, "F")],
+    [
+        (100, "A"), (90, "A"), (89.99, "B"), (80, "B"),
+        (70, "C"), (60, "D"), (59.9, "F"), (0, "F"),
+    ],
 )
 def test_letter_for_boundaries(score: float, letter: str) -> None:
     assert letter_for(score) == letter
@@ -54,7 +57,9 @@ def test_models_use_slots() -> None:
 
 
 def test_grade_record_is_namedtuple() -> None:
-    record = GradeRecord("S1", "A", "CS", 1, "C1", "Course", 3, "2024-S1", 75.0)
+    record = GradeRecord(
+        "S1", "A", "CS", 1, "C1", "Course", 3, "2024-S1", 75.0
+    )
     assert record.score == record[-1] == 75.0
     assert record._asdict()["course_code"] == "C1"
 
@@ -73,7 +78,9 @@ def test_student_average_and_best_grade() -> None:
 
 def test_student_rejects_foreign_grade() -> None:
     with pytest.raises(ValueError):
-        Student("S1", "Alice", "CS", 2).add_grade(Grade("S2", "C1", "2024-S1", 70.0))
+        Student("S1", "Alice", "CS", 2).add_grade(
+            Grade("S2", "C1", "2024-S1", 70.0)
+        )
 
 
 def test_grade_for_returns_optional() -> None:

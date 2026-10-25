@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections import Counter, OrderedDict, defaultdict, deque
+from collections import Counter, OrderedDict, defaultdict
 from typing import List
 
 import pytest
@@ -50,14 +50,17 @@ class TestOrderedDict:
     def test_distribution_is_ordered_a_to_f_with_zeros(self) -> None:
         result = ordered_distribution(Counter({"C": 3, "A": 1}))
         assert isinstance(result, OrderedDict)
-        assert list(result.items()) == [("A", 1), ("B", 0), ("C", 3), ("D", 0), ("F", 0)]
+        assert list(result.items()) == [
+            ("A", 1), ("B", 0), ("C", 3), ("D", 0), ("F", 0),
+        ]
 
 
 class TestDefaultDict:
     def test_group_by_major(self, dataset: Dataset) -> None:
         groups = group_by_major(dataset.students.values())
         assert isinstance(groups, defaultdict)
-        assert sorted(s.student_id for s in groups["Computer Science"]) == ["S1", "S3"]
+        cs_ids = sorted(s.student_id for s in groups["Computer Science"])
+        assert cs_ids == ["S1", "S3"]
         assert [s.student_id for s in groups["Mathematics"]] == ["S2"]
         assert groups["Physics"] == []
 
@@ -69,7 +72,8 @@ class TestDefaultDict:
     def test_scores_by_course_and_semester(self, dataset: Dataset) -> None:
         grades = all_grades(dataset.students.values())
         assert sorted(scores_by_course(grades)["C1"]) == [70.0, 80.0, 90.0]
-        assert sorted(scores_by_semester(grades)["2024-S2"]) == [60.0, 80.0, 100.0]
+        by_semester = scores_by_semester(grades)
+        assert sorted(by_semester["2024-S2"]) == [60.0, 80.0, 100.0]
 
 
 class TestRollingAverage:
@@ -80,10 +84,13 @@ class TestRollingAverage:
         assert rolling.values == [30, 40, 50]
         assert len(rolling) == 3
 
-    def test_is_backed_by_bounded_deque(self) -> None:
+    def test_window_size_stays_bounded(self) -> None:
         rolling = RollingAverage(window=2)
-        assert isinstance(rolling._values, deque)
-        assert rolling._values.maxlen == 2
+        for value in range(1_000):
+            rolling.add(float(value))
+            assert len(rolling) <= rolling.window
+        assert rolling.values == [998.0, 999.0]
+        assert rolling.average == pytest.approx(998.5)
 
     def test_average_is_none_when_empty(self) -> None:
         assert RollingAverage(window=2).average is None

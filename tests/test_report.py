@@ -11,7 +11,11 @@ import pytest
 from grade_analytics.aggregators import Dataset
 from grade_analytics.file_io import iter_records, write_json
 from grade_analytics.models import GradeRecord
-from grade_analytics.report import GradeReport, build_report, build_report_from_dataset
+from grade_analytics.report import (
+    GradeReport,
+    build_report,
+    build_report_from_dataset,
+)
 from grade_analytics.visualization import (
     bar_chart,
     distribution_chart,
@@ -38,7 +42,10 @@ EXPECTED_SECTIONS = [
 
 @pytest.fixture
 def report(records: List[GradeRecord]) -> GradeReport:
-    return build_report(records, source_file="grades.csv", top_n=2, rolling_window=2)
+    """Report built from the tiny dataset (top 2, 2-semester window)."""
+    return build_report(
+        records, source_file="grades.csv", top_n=2, rolling_window=2
+    )
 
 
 def test_sections_follow_typed_dict_order(report: GradeReport) -> None:
@@ -66,7 +73,9 @@ def test_summary_statistics(report: GradeReport) -> None:
     }
 
 
-def test_grade_distribution_is_complete_and_ordered(report: GradeReport) -> None:
+def test_grade_distribution_is_complete_and_ordered(
+    report: GradeReport,
+) -> None:
     assert list(report["grade_distribution"].items()) == [
         ("A", 2), ("B", 2), ("C", 1), ("D", 1), ("F", 0),
     ]
@@ -103,7 +112,9 @@ def test_empty_dataset_raises() -> None:
         build_report_from_dataset(Dataset(), source_file="empty.csv")
 
 
-def test_report_is_json_serialisable(report: GradeReport, tmp_path: Path) -> None:
+def test_report_is_json_serialisable(
+    report: GradeReport, tmp_path: Path
+) -> None:
     path = write_json(report, tmp_path / "report.json")
     loaded = json.loads(path.read_text(encoding="utf-8"))
     assert list(loaded) == EXPECTED_SECTIONS
@@ -111,8 +122,10 @@ def test_report_is_json_serialisable(report: GradeReport, tmp_path: Path) -> Non
 
 
 def test_sample_data_report() -> None:
-    """End-to-end run on the committed sample CSV, streamed with a generator."""
-    report = build_report(iter_records(SAMPLE_DATA), source_file=SAMPLE_DATA.name)
+    """End-to-end run on the committed sample CSV, streamed lazily."""
+    report = build_report(
+        iter_records(SAMPLE_DATA), source_file=SAMPLE_DATA.name
+    )
     meta = report["metadata"]
     assert meta["total_students"] == 30
     assert meta["total_records"] == sum(report["grade_distribution"].values())
@@ -159,6 +172,9 @@ def test_distribution_chart_shows_shares() -> None:
 
 def test_render_summary_contains_key_sections(report: GradeReport) -> None:
     text = render_summary(report)
-    for heading in ("Grade Distribution", "Average Score by Major", "Top Performers"):
+    headings = (
+        "Grade Distribution", "Average Score by Major", "Top Performers"
+    )
+    for heading in headings:
         assert heading in text
     assert "Alice" in text

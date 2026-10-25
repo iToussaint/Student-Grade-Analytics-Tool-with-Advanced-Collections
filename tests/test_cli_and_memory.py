@@ -16,8 +16,14 @@ from grade_analytics.memory import (
     measure_peak,
 )
 
+from tests.conftest import HEADER
 
-def test_cli_writes_report(csv_file: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+Capture = pytest.CaptureFixture[str]
+
+
+def test_cli_writes_report(
+    csv_file: Path, tmp_path: Path, capsys: Capture
+) -> None:
     output = tmp_path / "out" / "report.json"
     exit_code = main([str(csv_file), "-o", str(output), "--top", "2"])
     assert exit_code == 0
@@ -28,22 +34,25 @@ def test_cli_writes_report(csv_file: Path, tmp_path: Path, capsys: pytest.Captur
     assert "Report written to" in printed
 
 
-def test_cli_no_charts(csv_file: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
-    assert main([str(csv_file), "-o", str(tmp_path / "r.json"), "--no-charts"]) == 0
+def test_cli_no_charts(
+    csv_file: Path, tmp_path: Path, capsys: Capture
+) -> None:
+    args = [str(csv_file), "-o", str(tmp_path / "r.json"), "--no-charts"]
+    assert main(args) == 0
     assert "Grade Distribution" not in capsys.readouterr().out
 
 
-def test_cli_missing_file(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
-    assert main([str(tmp_path / "missing.csv"), "-o", str(tmp_path / "r.json")]) == 1
+def test_cli_missing_file(tmp_path: Path, capsys: Capture) -> None:
+    args = [str(tmp_path / "missing.csv"), "-o", str(tmp_path / "r.json")]
+    assert main(args) == 1
     assert "Input file not found" in capsys.readouterr().err
 
 
-def test_cli_file_without_valid_rows(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+def test_cli_file_without_valid_rows(
+    tmp_path: Path, capsys: Capture
+) -> None:
     path = tmp_path / "empty.csv"
-    path.write_text(
-        "student_id,name,major,year,course_code,course_name,credits,semester,score\n",
-        encoding="utf-8",
-    )
+    path.write_text(HEADER, encoding="utf-8")
     assert main([str(path), "-o", str(tmp_path / "r.json")]) == 1
     assert "empty dataset" in capsys.readouterr().err
 
@@ -53,8 +62,14 @@ def test_cli_rejects_non_positive_top(csv_file: Path) -> None:
         main([str(csv_file), "--top", "0"])
 
 
-def test_cli_memory_report(csv_file: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
-    assert main([str(csv_file), "-o", str(tmp_path / "r.json"), "--no-charts", "--memory-report"]) == 0
+def test_cli_memory_report(
+    csv_file: Path, tmp_path: Path, capsys: Capture
+) -> None:
+    args = [
+        str(csv_file), "-o", str(tmp_path / "r.json"),
+        "--no-charts", "--memory-report",
+    ]
+    assert main(args) == 0
     assert "MEMORY USAGE COMPARISON" in capsys.readouterr().out
 
 
@@ -77,8 +92,15 @@ def test_deque_window_uses_less_memory_than_list() -> None:
     assert peaks["deque(maxlen=window)"] < peaks["list (keeps all values)"]
 
 
-def test_generator_uses_less_memory_than_list(csv_file: Path) -> None:
-    comparison = compare_file_loading(csv_file)
-    assert len(comparison.results) == 2
-    text = format_comparisons([comparison])
-    assert "generator (iter_records)" in text
+def test_generator_uses_less_memory_than_list(tmp_path: Path) -> None:
+    path = tmp_path / "many.csv"
+    rows = "".join(
+        f"S{i},Student {i},CS,1,C1,Course,3,2024-S1,{i % 101}\n"
+        for i in range(2_000)
+    )
+    path.write_text(HEADER + rows, encoding="utf-8")
+
+    comparison = compare_file_loading(path)
+    peaks = {r.approach: r.peak_bytes for r in comparison.results}
+    assert peaks["generator (iter_records)"] < peaks["list (load_records)"]
+    assert "generator (iter_records)" in format_comparisons([comparison])
