@@ -45,27 +45,53 @@ hints, checked with `mypy --strict`.
 
 ## Project Structure
 
+The project uses the standard **src layout**: the package lives under
+`src/`, so tests always run against the installed package rather than
+files that happen to be in the working directory.
+
 ```
 .
-├── grade_analytics/
-│   ├── __init__.py
-│   ├── __main__.py        # python -m grade_analytics
-│   ├── cli.py             # argparse command-line interface
-│   ├── models.py          # Student, Course, Grade dataclasses; GradeRecord namedtuple
-│   ├── aggregators.py     # Counter / defaultdict / OrderedDict / deque helpers
-│   ├── file_io.py         # CSV reader (generator) and JSON writer
-│   ├── stats.py           # mean, median, mode, percentiles, ranking, trends
-│   ├── report.py          # TypedDict report schema and report builder
-│   ├── visualization.py   # text charts and tables
-│   └── memory.py          # tracemalloc-based memory comparisons
+├── src/
+│   └── grade_analytics/
+│       ├── __init__.py
+│       ├── __main__.py            # python -m grade_analytics
+│       ├── cli.py                 # argparse command-line interface
+│       ├── models/
+│       │   └── entities.py        # Student, Course, Grade dataclasses; GradeRecord namedtuple
+│       ├── io/
+│       │   └── files.py           # CSV reader (generator) and JSON writer
+│       ├── analysis/
+│       │   ├── aggregators.py     # Counter / defaultdict / OrderedDict / deque helpers
+│       │   └── stats.py           # mean, median, mode, percentiles, ranking, trends
+│       ├── reporting/
+│       │   ├── report.py          # TypedDict report schema and report builder
+│       │   └── charts.py          # text charts and tables
+│       └── performance/
+│           └── memory.py          # tracemalloc-based memory comparisons
+├── tests/
+│   ├── conftest.py                # shared fixtures
+│   ├── helpers.py                 # shared test data
+│   ├── unit/                      # one test module per package module
+│   └── integration/               # CLI and end-to-end sample-data tests
 ├── scripts/
-│   └── generate_sample_data.py
+│   └── generate_sample_data.py    # reproducible sample CSV generator
 ├── data/
-│   └── sample_grades.csv  # 30 students, 312 grade records
-├── tests/                 # pytest suite
-├── pyproject.toml         # mypy and pytest configuration
-└── requirements.txt
+│   └── sample_grades.csv          # 30 students, 312 grade records
+├── pyproject.toml                 # packaging, mypy and pytest configuration
+├── requirements.txt               # development dependencies
+└── README.md
 ```
+
+| Subpackage | Responsibility |
+|---|---|
+| `models` | Domain data structures |
+| `io` | Reading CSV input and writing JSON output |
+| `analysis` | Aggregation with collections and statistical calculations |
+| `reporting` | Building the JSON report and rendering terminal charts |
+| `performance` | Measuring the memory cost of collection choices |
+
+Each subpackage re-exports its public names in `__init__.py`, for
+example `from grade_analytics.analysis import mean, RollingAverage`.
 
 ## Setup
 
@@ -81,7 +107,8 @@ python -m venv .venv
 # macOS / Linux
 source .venv/bin/activate
 
-pip install -r requirements.txt
+pip install -e .                 # install the package (editable)
+pip install -r requirements.txt  # development tools: pytest, mypy
 ```
 
 The tool itself uses only the standard library. `pytest` and `mypy` are
@@ -91,6 +118,8 @@ needed only for development.
 
 ```bash
 python -m grade_analytics data/sample_grades.csv
+# or, equivalently, the installed command:
+grade-analytics data/sample_grades.csv
 ```
 
 | Option | Default | Description |
@@ -332,7 +361,7 @@ Trend sections:
 
 ## Design: Collections and Data Models
 
-### Data models (`models.py`)
+### Data models (`models/entities.py`)
 
 | Type | Kind | Why |
 |---|---|---|
@@ -425,23 +454,37 @@ Key takeaways:
 
 ```bash
 python -m pytest          # 101 tests
-python -m mypy            # strict mode: grade_analytics, scripts, tests
+python -m mypy            # strict mode: src, scripts, tests
+
+python -m pytest tests/unit         # unit tests only
+python -m pytest tests/integration  # integration tests only
 ```
 
 The test suite covers:
 
+**Unit tests (`tests/unit/`)**
+
 - **Each collection type**: `Counter`, `defaultdict`, `OrderedDict` and
-  `deque` (`tests/test_aggregators.py`).
+  `deque` (`test_aggregators.py`).
 - **Models**: letter boundaries, `Union` score parsing, `Optional` results,
-  immutability and `__slots__` (`tests/test_models.py`).
+  immutability and `__slots__` (`test_entities.py`).
 - **File I/O**: generator behaviour, missing file, directory, permission
-  errors, missing columns, invalid rows, JSON writing (`tests/test_file_io.py`).
+  errors, missing columns, invalid rows, JSON writing (`test_files.py`).
 - **Calculations**: mean, median, multimodal mode, percentiles, tie ranking,
-  rolling averages, trends (`tests/test_stats.py`).
-- **Report**: every section checked against a small hand-computed dataset,
-  plus an end-to-end run on `data/sample_grades.csv` (`tests/test_report.py`).
-- **CLI and memory**: exit codes, options, and the expected memory ordering
-  of the compared structures (`tests/test_cli_and_memory.py`).
+  rolling averages, trends (`test_stats.py`).
+- **Report**: every section checked against a small hand-computed dataset
+  (`test_report.py`).
+- **Charts**: bar scaling, baselines and the console summary
+  (`test_charts.py`).
+- **Memory**: the expected memory ordering of the compared structures,
+  including generator vs list loading (`test_memory.py`).
+
+**Integration tests (`tests/integration/`)**
+
+- **CLI**: exit codes, options, error messages and the memory report
+  (`test_cli.py`).
+- **Sample data**: an end-to-end run on `data/sample_grades.csv`
+  (`test_sample_data.py`).
 
 ## Screenshot
 
