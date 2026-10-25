@@ -22,6 +22,7 @@ DEFAULT_OUTPUT = Path("reports") / "grade_report.json"
 
 
 def _positive_int(value: str) -> int:
+    """Argparse type that accepts only integers greater than zero."""
     number = int(value)
     if number < 1:
         raise argparse.ArgumentTypeError(

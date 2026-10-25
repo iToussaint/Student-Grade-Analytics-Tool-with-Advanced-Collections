@@ -38,6 +38,17 @@ DECIMALS = 2
 
 
 class ReportMetadata(TypedDict):
+    """``metadata`` section: where the data came from and its size.
+
+    Keys:
+        source_file: Name of the input CSV file.
+        generated_at: UTC timestamp in ISO 8601 format.
+        total_records: Number of valid grade rows processed.
+        total_students: Number of distinct students.
+        total_courses: Number of distinct courses.
+        semesters: Semesters found, in chronological order.
+    """
+
     source_file: str
     generated_at: str
     total_records: int
@@ -47,6 +58,17 @@ class ReportMetadata(TypedDict):
 
 
 class SummaryStatistics(TypedDict):
+    """``summary`` section: descriptive statistics of all scores.
+
+    Keys:
+        count: Number of scores.
+        mean: Arithmetic mean.
+        median: Middle value of the sorted scores.
+        mode: Every most frequent score (a list, for multimodal data).
+        minimum: Lowest score.
+        maximum: Highest score.
+    """
+
     count: int
     mean: float
     median: float
@@ -56,6 +78,19 @@ class SummaryStatistics(TypedDict):
 
 
 class RankingEntry(TypedDict):
+    """One student in ``rankings`` and ``top_performers``.
+
+    Keys:
+        rank: Competition rank (ties share a rank, e.g. 1, 1, 3).
+        student_id: Unique student identifier.
+        name: Student name.
+        major: Student major.
+        year: Academic year.
+        average: Mean score across all of the student's grades.
+        percentile: Percentile rank of the average (0-100).
+        courses_taken: Number of grades the average is based on.
+    """
+
     rank: int
     student_id: str
     name: str
@@ -67,6 +102,15 @@ class RankingEntry(TypedDict):
 
 
 class GroupSummary(TypedDict):
+    """Statistics of one group in ``by_major`` or ``by_year``.
+
+    Keys:
+        student_count: Number of students in the group.
+        average: Mean of every score in the group.
+        median: Median of every score in the group.
+        grade_distribution: Count per letter grade, A to F.
+    """
+
     student_count: int
     average: float
     median: float
@@ -74,6 +118,18 @@ class GroupSummary(TypedDict):
 
 
 class CourseSummary(TypedDict):
+    """Statistics of one course in the ``courses`` section.
+
+    Keys:
+        name: Course name.
+        credits: Credit value of the course.
+        enrollments: Number of grades recorded for the course.
+        mean: Mean score.
+        median: Median score.
+        mode: Every most frequent score.
+        grade_distribution: Count per letter grade, A to F.
+    """
+
     name: str
     credits: int
     enrollments: int
@@ -84,6 +140,15 @@ class CourseSummary(TypedDict):
 
 
 class SemesterTrendEntry(TypedDict):
+    """One semester in ``semester_trends``.
+
+    Keys:
+        semester: Semester identifier, e.g. ``2024-S1``.
+        average: Mean score of the semester.
+        rolling_average: Mean of the last *window* semester averages.
+        grade_count: Number of grades recorded in the semester.
+    """
+
     semester: str
     average: float
     rolling_average: float
@@ -91,6 +156,17 @@ class SemesterTrendEntry(TypedDict):
 
 
 class StudentTrendEntry(TypedDict):
+    """One student in ``student_trends``.
+
+    Keys:
+        student_id: Unique student identifier.
+        name: Student name.
+        semester_averages: Mean score per semester, chronological.
+        rolling_averages: Smoothed semester averages, same order.
+        direction: ``improving``, ``declining``, ``stable`` or
+            ``insufficient data``.
+    """
+
     student_id: str
     name: str
     semester_averages: Dict[str, float]
@@ -115,6 +191,7 @@ class GradeReport(TypedDict):
 
 
 def _round(value: float) -> float:
+    """Round a value to the number of decimals used in the report."""
     return round(value, DECIMALS)
 
 
@@ -131,6 +208,7 @@ def summarize_scores(scores: Sequence[float]) -> SummaryStatistics:
 
 
 def _ranking_entry(entry: RankedStudent) -> RankingEntry:
+    """Convert a ``RankedStudent`` into its JSON report entry."""
     return {
         "rank": entry.rank,
         "student_id": entry.student_id,
@@ -144,6 +222,7 @@ def _ranking_entry(entry: RankedStudent) -> RankingEntry:
 
 
 def _group_summary(students: Sequence[Student]) -> GroupSummary:
+    """Statistics for a non-empty group of students."""
     grades = all_grades(students)
     scores = [grade.score for grade in grades]
     return {
@@ -157,6 +236,7 @@ def _group_summary(students: Sequence[Student]) -> GroupSummary:
 def _course_summaries(
     dataset: Dataset, grades: Sequence[Grade]
 ) -> Dict[str, CourseSummary]:
+    """Statistics for every course, ordered by course code."""
     scores = scores_by_course(grades)
     letters_by_course: DefaultDict[str, Counter[str]] = defaultdict(Counter)
     for grade in grades:

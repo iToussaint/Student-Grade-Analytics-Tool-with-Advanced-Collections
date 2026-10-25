@@ -72,6 +72,7 @@ def percentile_rank(value: float, population: Sequence[float]) -> float:
 
 
 def _percentile_from_sorted(value: float, ordered: Sequence[float]) -> float:
+    """Percentile rank of ``value`` in an already sorted population."""
     below = bisect_left(ordered, value)
     equal = bisect_right(ordered, value) - below
     return 100.0 * (below + 0.5 * equal) / len(ordered)

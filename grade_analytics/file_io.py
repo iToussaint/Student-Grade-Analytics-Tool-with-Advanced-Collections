@@ -38,6 +38,7 @@ class DataFileError(Exception):
 
 
 def _to_path(path: PathInput) -> Path:
+    """Normalise a ``str`` or ``Path`` input to a ``Path`` (expands ``~``)."""
     return Path(path).expanduser()
 
 

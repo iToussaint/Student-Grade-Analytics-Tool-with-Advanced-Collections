@@ -144,6 +144,14 @@ class RollingAverage:
     """
 
     def __init__(self, window: int) -> None:
+        """Create an empty rolling average.
+
+        Args:
+            window: Number of most recent values to average.
+
+        Raises:
+            ValueError: If ``window`` is smaller than 1.
+        """
         if window < 1:
             raise ValueError("window must be at least 1")
         self.window = window
@@ -171,4 +179,5 @@ class RollingAverage:
         return list(self._values)
 
     def __len__(self) -> int:
+        """Number of values currently inside the window."""
         return len(self._values)

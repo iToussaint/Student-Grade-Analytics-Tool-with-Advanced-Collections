@@ -75,6 +75,7 @@ class _SlottedRecord:
 
 
 def _sample_values(index: int) -> Dict[str, Any]:
+    """Field values for the ``index``-th synthetic record."""
     return {
         "student_id": f"S{index:05d}",
         "name": f"Student {index}",
@@ -114,6 +115,7 @@ def compare_rolling_window(
     """Keeping a rolling window: a growing list versus ``deque(maxlen)``."""
 
     def with_list() -> List[float]:
+        """Keep every value in a list and average its last ``window``."""
         values: List[float] = []
         for i in range(count):
             values.append(float(i))
@@ -121,6 +123,7 @@ def compare_rolling_window(
         return values
 
     def with_deque() -> Deque[float]:
+        """Keep only the last ``window`` values in a bounded deque."""
         values: Deque[float] = deque(maxlen=window)
         for i in range(count):
             values.append(float(i))
@@ -140,10 +143,12 @@ def compare_file_loading(path: PathInput) -> MemoryComparison:
     """Mean score of a CSV file: load all records vs stream a generator."""
 
     def with_list() -> float:
+        """Load every record into a list before averaging."""
         records: List[GradeRecord] = load_records(path)
         return sum(r.score for r in records) / max(len(records), 1)
 
     def with_generator() -> float:
+        """Average records one at a time as the generator yields them."""
         total = 0.0
         count = 0
         for record in iter_records(path):
