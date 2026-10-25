@@ -12,7 +12,7 @@ from collections import Counter, OrderedDict, defaultdict
 from datetime import datetime, timezone
 from typing import DefaultDict, Dict, Iterable, List, Sequence, TypedDict
 
-from grade_analytics.aggregators import (
+from grade_analytics.analysis.aggregators import (
     Dataset,
     all_grades,
     build_dataset,
@@ -22,8 +22,8 @@ from grade_analytics.aggregators import (
     ordered_distribution,
     scores_by_course,
 )
-from grade_analytics.models import Grade, GradeRecord, Student
-from grade_analytics.stats import (
+from grade_analytics.models.entities import Grade, GradeRecord, Student
+from grade_analytics.analysis.stats import (
     RankedStudent,
     mean,
     median,

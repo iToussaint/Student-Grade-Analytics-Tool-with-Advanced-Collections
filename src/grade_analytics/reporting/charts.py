@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 from typing import List, Mapping, Sequence
 
-from grade_analytics.report import (
+from grade_analytics.reporting.report import (
     GradeReport,
     RankingEntry,
     SemesterTrendEntry,

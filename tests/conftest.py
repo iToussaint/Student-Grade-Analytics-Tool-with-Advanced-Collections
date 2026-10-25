@@ -11,8 +11,8 @@ from typing import List
 
 import pytest
 
-from grade_analytics.aggregators import Dataset, build_dataset
-from grade_analytics.models import GradeRecord
+from grade_analytics.analysis.aggregators import Dataset, build_dataset
+from grade_analytics.models.entities import GradeRecord
 
 HEADER = (
     "student_id,name,major,year,course_code,course_name,credits,"

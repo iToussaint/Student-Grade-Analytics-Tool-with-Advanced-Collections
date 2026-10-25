@@ -12,8 +12,8 @@ from collections import deque
 from dataclasses import dataclass
 from typing import Any, Callable, Deque, Dict, List
 
-from grade_analytics.file_io import PathInput, iter_records, load_records
-from grade_analytics.models import GradeRecord
+from grade_analytics.io.files import PathInput, iter_records, load_records
+from grade_analytics.models.entities import GradeRecord
 
 
 @dataclass(frozen=True, slots=True)

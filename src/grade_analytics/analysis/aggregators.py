@@ -14,7 +14,7 @@ from collections import Counter, OrderedDict, defaultdict, deque
 from dataclasses import dataclass, field
 from typing import Deque, DefaultDict, Dict, Iterable, List, Optional
 
-from grade_analytics.models import (
+from grade_analytics.models.entities import (
     LETTER_GRADES,
     Course,
     Grade,

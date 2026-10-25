@@ -8,15 +8,15 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 
-from grade_analytics.file_io import DataFileError, iter_records, write_json
-from grade_analytics.memory import (
+from grade_analytics.io.files import DataFileError, iter_records, write_json
+from grade_analytics.performance.memory import (
     compare_file_loading,
     compare_record_structures,
     compare_rolling_window,
     format_comparisons,
 )
-from grade_analytics.report import build_report
-from grade_analytics.visualization import render_summary
+from grade_analytics.reporting.report import build_report
+from grade_analytics.reporting.charts import render_summary
 
 DEFAULT_OUTPUT = Path("reports") / "grade_report.json"
 

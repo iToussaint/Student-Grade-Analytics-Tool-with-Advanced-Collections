@@ -7,8 +7,11 @@ from collections import Counter, OrderedDict
 from dataclasses import dataclass
 from typing import Dict, Iterable, List, Mapping, Optional, Sequence
 
-from grade_analytics.aggregators import RollingAverage, scores_by_semester
-from grade_analytics.models import Grade, Student
+from grade_analytics.analysis.aggregators import (
+    RollingAverage,
+    scores_by_semester,
+)
+from grade_analytics.models.entities import Grade, Student
 
 # Minimum change (in score points) for a trend to count as a real movement.
 TREND_THRESHOLD: float = 1.0

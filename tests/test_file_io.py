@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from grade_analytics.file_io import (
+from grade_analytics.io.files import (
     DataFileError,
     iter_records,
     load_records,

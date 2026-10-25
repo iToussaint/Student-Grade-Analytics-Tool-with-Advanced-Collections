@@ -8,15 +8,15 @@ from typing import List
 
 import pytest
 
-from grade_analytics.aggregators import Dataset
-from grade_analytics.file_io import iter_records, write_json
-from grade_analytics.models import GradeRecord
-from grade_analytics.report import (
+from grade_analytics.analysis.aggregators import Dataset
+from grade_analytics.io.files import iter_records, write_json
+from grade_analytics.models.entities import GradeRecord
+from grade_analytics.reporting.report import (
     GradeReport,
     build_report,
     build_report_from_dataset,
 )
-from grade_analytics.visualization import (
+from grade_analytics.reporting.charts import (
     bar_chart,
     distribution_chart,
     render_summary,

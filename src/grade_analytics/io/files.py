@@ -13,7 +13,7 @@ import logging
 from pathlib import Path
 from typing import Any, Dict, Iterator, List, Mapping, Union
 
-from grade_analytics.models import GradeRecord, parse_score
+from grade_analytics.models.entities import GradeRecord, parse_score
 
 logger = logging.getLogger(__name__)
 

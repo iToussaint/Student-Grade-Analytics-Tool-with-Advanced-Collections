@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import pytest
 
-from grade_analytics.aggregators import Dataset, all_grades
-from grade_analytics.models import Grade, Student
-from grade_analytics.stats import (
+from grade_analytics.analysis.aggregators import Dataset, all_grades
+from grade_analytics.models.entities import Grade, Student
+from grade_analytics.analysis.stats import (
     mean,
     median,
     mode,

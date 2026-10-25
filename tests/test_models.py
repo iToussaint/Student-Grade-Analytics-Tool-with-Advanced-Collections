@@ -7,7 +7,7 @@ from typing import Union
 
 import pytest
 
-from grade_analytics.models import (
+from grade_analytics.models.entities import (
     Course,
     Grade,
     GradeRecord,

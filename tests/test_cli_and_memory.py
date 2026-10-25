@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from grade_analytics.cli import main
-from grade_analytics.memory import (
+from grade_analytics.performance.memory import (
     compare_file_loading,
     compare_record_structures,
     compare_rolling_window,

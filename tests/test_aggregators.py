@@ -7,7 +7,7 @@ from typing import List
 
 import pytest
 
-from grade_analytics.aggregators import (
+from grade_analytics.analysis.aggregators import (
     Dataset,
     RollingAverage,
     all_grades,
@@ -19,7 +19,7 @@ from grade_analytics.aggregators import (
     scores_by_course,
     scores_by_semester,
 )
-from grade_analytics.models import GradeRecord
+from grade_analytics.models.entities import GradeRecord
 
 
 class TestDataset:

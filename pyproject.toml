@@ -1,16 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "grade-analytics"
 version = "1.0.0"
 description = "Student Grade Analytics Tool built on Python's advanced collections"
+readme = "README.md"
 requires-python = ">=3.11"
+
+[project.scripts]
+grade-analytics = "grade_analytics.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]
 
 [tool.mypy]
 python_version = "3.11"
 strict = true
-files = ["grade_analytics", "scripts", "tests"]
+mypy_path = "src"
+files = ["src", "scripts", "tests"]
 
 [[tool.mypy.overrides]]
 module = "tests.*"
