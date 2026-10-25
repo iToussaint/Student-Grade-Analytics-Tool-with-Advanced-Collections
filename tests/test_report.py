@@ -12,7 +12,12 @@ from grade_analytics.aggregators import Dataset
 from grade_analytics.file_io import iter_records, write_json
 from grade_analytics.models import GradeRecord
 from grade_analytics.report import GradeReport, build_report, build_report_from_dataset
-from grade_analytics.visualization import bar_chart, distribution_chart, render_summary
+from grade_analytics.visualization import (
+    bar_chart,
+    distribution_chart,
+    render_summary,
+    score_baseline,
+)
 
 from tests.conftest import SAMPLE_DATA
 
@@ -125,6 +130,23 @@ def test_bar_chart_scales_to_width() -> None:
     assert lines[2] == "A | ########## 10"
     assert lines[3] == "B | ##### 5"
     assert lines[4] == "C |  0"
+
+
+def test_bar_chart_with_baseline() -> None:
+    chart = bar_chart({"A": 80, "B": 70}, "Scores", width=10, baseline=60)
+    lines = chart.splitlines()
+    assert lines[0] == "Scores (axis starts at 60)"
+    assert lines[2] == "A | ########## 80"
+    assert lines[3] == "B | ##### 70"
+
+
+@pytest.mark.parametrize(
+    ("values", "expected"),
+    [([68.27, 78.06], 60.0), ([70.0, 75.0], 60.0), ([72.5], 70.0),
+     ([4.0, 50.0], 0.0), ([], 0.0)],
+)
+def test_score_baseline(values: List[float], expected: float) -> None:
+    assert score_baseline(values) == expected
 
 
 def test_bar_chart_without_data() -> None:

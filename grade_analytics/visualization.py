@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from typing import List, Mapping, Sequence
 
 from grade_analytics.report import (
@@ -19,32 +20,51 @@ def bar_chart(
     title: str,
     width: int = DEFAULT_WIDTH,
     value_format: str = "{:g}",
+    baseline: float = 0.0,
 ) -> str:
     """Render a horizontal bar chart.
 
-    Bars are scaled relative to the largest value so the longest bar is
-    ``width`` characters long. Labels are left-aligned in a common column.
+    Bars are scaled between ``baseline`` and the largest value, so the
+    longest bar is ``width`` characters long. Labels are left-aligned in a
+    common column. When ``baseline`` is not zero it is shown in the title,
+    so the shortened axis is never hidden from the reader.
 
     Args:
         data: Ordered mapping of label to value.
         title: Heading printed above the chart.
         width: Maximum bar length in characters.
         value_format: Format string applied to each value.
+        baseline: Value at which bars start (default 0).
     """
+    if baseline:
+        title = f"{title} (axis starts at {baseline:g})"
     lines: List[str] = [title, "-" * len(title)]
     if not data:
         lines.append("(no data)")
         return "\n".join(lines)
 
     label_width = max(len(label) for label in data)
-    largest = max(data.values())
+    span = max(data.values()) - baseline
     for label, value in data.items():
-        length = round(width * value / largest) if largest > 0 else 0
+        length = round(width * (value - baseline) / span) if span > 0 else 0
+        length = max(length, 0)
         bar = BAR_CHAR * length
         lines.append(
             f"{label:<{label_width}} | {bar} {value_format.format(value)}"
         )
     return "\n".join(lines)
+
+
+def score_baseline(values: Sequence[float]) -> float:
+    """Axis start for a chart of scores: the multiple of 10 below the minimum.
+
+    Averages usually sit in a narrow band (e.g. 68-78), so bars starting at
+    0 would look almost identical. Starting just below the lowest value
+    makes the differences visible while every bar keeps a non-zero length.
+    """
+    if not values:
+        return 0.0
+    return max(0.0, math.floor((min(values) - 1) / 10) * 10)
 
 
 def distribution_chart(
@@ -66,12 +86,14 @@ def semester_chart(
     trends: Sequence[SemesterTrendEntry], width: int = DEFAULT_WIDTH
 ) -> str:
     """Bar chart of the average score per semester, with rolling average."""
+    averages = {t["semester"]: t["average"] for t in trends}
     lines = [
         bar_chart(
-            {t["semester"]: t["average"] for t in trends},
+            averages,
             "Average Score per Semester",
             width,
             value_format="{:.2f}",
+            baseline=score_baseline(list(averages.values())),
         )
     ]
     if trends:
@@ -130,6 +152,7 @@ def render_summary(report: GradeReport, width: int = DEFAULT_WIDTH) -> str:
             "Average Score by Major",
             width,
             value_format="{:.2f}",
+            baseline=score_baseline(list(major_averages.values())),
         ),
         "",
         bar_chart(
@@ -137,6 +160,7 @@ def render_summary(report: GradeReport, width: int = DEFAULT_WIDTH) -> str:
             "Average Score by Year",
             width,
             value_format="{:.2f}",
+            baseline=score_baseline(list(year_averages.values())),
         ),
         "",
         semester_chart(report["semester_trends"], width),
