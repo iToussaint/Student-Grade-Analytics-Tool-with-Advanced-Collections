@@ -4,7 +4,11 @@ from __future__ import annotations
 
 from typing import List, Mapping, Sequence
 
-from grade_analytics.report import GradeReport, RankingEntry, SemesterTrendEntry
+from grade_analytics.report import (
+    GradeReport,
+    RankingEntry,
+    SemesterTrendEntry,
+)
 
 BAR_CHAR = "#"
 DEFAULT_WIDTH = 40
@@ -37,23 +41,30 @@ def bar_chart(
     for label, value in data.items():
         length = round(width * value / largest) if largest > 0 else 0
         bar = BAR_CHAR * length
-        lines.append(f"{label:<{label_width}} | {bar} {value_format.format(value)}")
+        lines.append(
+            f"{label:<{label_width}} | {bar} {value_format.format(value)}"
+        )
     return "\n".join(lines)
 
 
-def distribution_chart(distribution: Mapping[str, int], width: int = DEFAULT_WIDTH) -> str:
+def distribution_chart(
+    distribution: Mapping[str, int], width: int = DEFAULT_WIDTH
+) -> str:
     """Bar chart of the letter grade distribution with percentages."""
     total = sum(distribution.values())
     lines = [bar_chart(distribution, "Grade Distribution", width)]
     if total:
         shares = ", ".join(
-            f"{letter}: {100 * count / total:.1f}%" for letter, count in distribution.items()
+            f"{letter}: {100 * count / total:.1f}%"
+            for letter, count in distribution.items()
         )
         lines.append(f"Share -> {shares}")
     return "\n".join(lines)
 
 
-def semester_chart(trends: Sequence[SemesterTrendEntry], width: int = DEFAULT_WIDTH) -> str:
+def semester_chart(
+    trends: Sequence[SemesterTrendEntry], width: int = DEFAULT_WIDTH
+) -> str:
     """Bar chart of the average score per semester, with rolling average."""
     lines = [
         bar_chart(
@@ -64,19 +75,24 @@ def semester_chart(trends: Sequence[SemesterTrendEntry], width: int = DEFAULT_WI
         )
     ]
     if trends:
-        rolling = ", ".join(f"{t['semester']}: {t['rolling_average']:.2f}" for t in trends)
+        rolling = ", ".join(
+            f"{t['semester']}: {t['rolling_average']:.2f}" for t in trends
+        )
         lines.append(f"Rolling average -> {rolling}")
     return "\n".join(lines)
 
 
 def top_performers_table(entries: Sequence[RankingEntry]) -> str:
     """Fixed-width table of the top-ranked students."""
-    header = f"{'Rank':<5}{'ID':<8}{'Name':<22}{'Major':<20}{'Avg':>7}{'Pctl':>8}"
+    header = (
+        f"{'Rank':<5}{'ID':<8}{'Name':<22}{'Major':<20}{'Avg':>7}{'Pctl':>8}"
+    )
     lines = ["Top Performers", "-" * len(header), header]
     for e in entries:
         lines.append(
             f"{e['rank']:<5}{e['student_id']:<8}{e['name'][:21]:<22}"
-            f"{e['major'][:19]:<20}{e['average']:>7.2f}{e['percentile']:>8.1f}"
+            f"{e['major'][:19]:<20}{e['average']:>7.2f}"
+            f"{e['percentile']:>8.1f}"
         )
     return "\n".join(lines)
 
@@ -86,6 +102,13 @@ def render_summary(report: GradeReport, width: int = DEFAULT_WIDTH) -> str:
     meta = report["metadata"]
     summary = report["summary"]
     mode_text = ", ".join(f"{value:g}" for value in summary["mode"])
+    major_averages = {
+        major: group["average"] for major, group in report["by_major"].items()
+    }
+    year_averages = {
+        f"Year {year}": group["average"]
+        for year, group in report["by_year"].items()
+    }
     sections = [
         "=" * 60,
         "STUDENT GRADE ANALYTICS REPORT",
@@ -97,19 +120,20 @@ def render_summary(report: GradeReport, width: int = DEFAULT_WIDTH) -> str:
         f"Semesters   : {', '.join(meta['semesters'])}",
         "",
         f"Mean {summary['mean']:.2f} | Median {summary['median']:.2f} | "
-        f"Mode {mode_text} | Min {summary['minimum']:g} | Max {summary['maximum']:g}",
+        f"Mode {mode_text} | Min {summary['minimum']:g} | "
+        f"Max {summary['maximum']:g}",
         "",
         distribution_chart(report["grade_distribution"], width),
         "",
         bar_chart(
-            {major: group["average"] for major, group in report["by_major"].items()},
+            major_averages,
             "Average Score by Major",
             width,
             value_format="{:.2f}",
         ),
         "",
         bar_chart(
-            {f"Year {year}": group["average"] for year, group in report["by_year"].items()},
+            year_averages,
             "Average Score by Year",
             width,
             value_format="{:.2f}",

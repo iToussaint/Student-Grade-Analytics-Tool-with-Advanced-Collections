@@ -1,8 +1,14 @@
 """Generate a reproducible CSV of student grades.
 
 Usage:
-    python scripts/generate_sample_data.py data/sample_grades.csv --students 30
-    python scripts/generate_sample_data.py data/large_grades.csv --students 20000
+    python scripts/generate_sample_data.py OUTPUT [--students N] [--seed N]
+
+Examples:
+    # The committed sample dataset (30 students)
+    python scripts/generate_sample_data.py data/sample_grades.csv
+    # A large dataset for performance testing (20,000 students)
+    python scripts/generate_sample_data.py data/large_grades.csv \\
+        --students 20000
 
 Each student has a base ability and a personal trend, so the data contains
 realistic distributions, rankings and semester-to-semester trends.
@@ -97,7 +103,9 @@ def generate_rows(students: int, seed: int) -> List[Dict[str, object]]:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate sample grade data.")
     parser.add_argument("output", type=Path, help="CSV file to create")
-    parser.add_argument("--students", type=int, default=30, help="number of students")
+    parser.add_argument(
+        "--students", type=int, default=30, help="number of students"
+    )
     parser.add_argument("--seed", type=int, default=42, help="random seed")
     args = parser.parse_args()
 
@@ -107,7 +115,10 @@ def main() -> None:
         writer = csv.DictWriter(handle, fieldnames=FIELDNAMES)
         writer.writeheader()
         writer.writerows(rows)
-    print(f"Wrote {len(rows)} rows for {args.students} students to {args.output}")
+    print(
+        f"Wrote {len(rows)} rows for {args.students} students "
+        f"to {args.output}"
+    )
 
 
 if __name__ == "__main__":

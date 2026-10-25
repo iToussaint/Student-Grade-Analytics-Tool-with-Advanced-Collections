@@ -1,4 +1,4 @@
-"""Statistical calculations: central tendency, percentiles, rankings, trends."""
+"""Statistics: central tendency, percentiles, rankings and trends."""
 
 from __future__ import annotations
 
@@ -80,7 +80,10 @@ def _percentile_from_sorted(value: float, ordered: Sequence[float]) -> float:
 def percentile_ranks(scores: Mapping[str, float]) -> Dict[str, float]:
     """Percentile rank of every entry, sorting the population only once."""
     ordered = sorted(scores.values())
-    return {key: _percentile_from_sorted(value, ordered) for key, value in scores.items()}
+    return {
+        key: _percentile_from_sorted(value, ordered)
+        for key, value in scores.items()
+    }
 
 
 @dataclass(frozen=True, slots=True)
@@ -140,7 +143,9 @@ def rank_students(students: Iterable[Student]) -> List[RankedStudent]:
     return ranked
 
 
-def top_performers(ranked: Sequence[RankedStudent], count: int) -> List[RankedStudent]:
+def top_performers(
+    ranked: Sequence[RankedStudent], count: int
+) -> List[RankedStudent]:
     """The first ``count`` students of an existing ranking."""
     if count < 0:
         raise ValueError("count must not be negative")
@@ -157,7 +162,9 @@ class SemesterTrend:
     grade_count: int
 
 
-def semester_trends(grades: Iterable[Grade], window: int = 3) -> List[SemesterTrend]:
+def semester_trends(
+    grades: Iterable[Grade], window: int = 3
+) -> List[SemesterTrend]:
     """Average per semester plus a ``deque``-backed rolling average.
 
     Semesters are processed chronologically (their identifiers, such as
@@ -180,7 +187,9 @@ def semester_trends(grades: Iterable[Grade], window: int = 3) -> List[SemesterTr
     return trends
 
 
-def trend_direction(values: Sequence[float], threshold: float = TREND_THRESHOLD) -> str:
+def trend_direction(
+    values: Sequence[float], threshold: float = TREND_THRESHOLD
+) -> str:
     """Classify a chronological series as improving, declining or stable.
 
     Compares the last value with the first. A series with fewer than two

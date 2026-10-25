@@ -154,7 +154,9 @@ def _group_summary(students: Sequence[Student]) -> GroupSummary:
     }
 
 
-def _course_summaries(dataset: Dataset, grades: Sequence[Grade]) -> Dict[str, CourseSummary]:
+def _course_summaries(
+    dataset: Dataset, grades: Sequence[Grade]
+) -> Dict[str, CourseSummary]:
     scores = scores_by_course(grades)
     letters_by_course: DefaultDict[str, Counter[str]] = defaultdict(Counter)
     for grade in grades:
@@ -171,7 +173,9 @@ def _course_summaries(dataset: Dataset, grades: Sequence[Grade]) -> Dict[str, Co
             "mean": _round(mean(course_scores)),
             "median": _round(median(course_scores)),
             "mode": [_round(value) for value in mode(course_scores)],
-            "grade_distribution": ordered_distribution(letters_by_course[code]),
+            "grade_distribution": ordered_distribution(
+                letters_by_course[code]
+            ),
         }
     return summaries
 
@@ -218,7 +222,9 @@ def build_report_from_dataset(
     return {
         "metadata": {
             "source_file": source_file,
-            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "generated_at": datetime.now(timezone.utc).isoformat(
+                timespec="seconds"
+            ),
             "total_records": dataset.record_count,
             "total_students": len(students),
             "total_courses": len(dataset.courses),
@@ -226,7 +232,9 @@ def build_report_from_dataset(
         },
         "summary": summarize_scores([grade.score for grade in grades]),
         "grade_distribution": ordered_distribution(grade_distribution(grades)),
-        "top_performers": [_ranking_entry(e) for e in top_performers(ranked, top_n)],
+        "top_performers": [
+            _ranking_entry(e) for e in top_performers(ranked, top_n)
+        ],
         "rankings": [_ranking_entry(e) for e in ranked],
         "by_major": by_major,
         "by_year": by_year,
@@ -248,7 +256,9 @@ def build_report_from_dataset(
                     (semester, _round(value))
                     for semester, value in trend.semester_averages.items()
                 ),
-                "rolling_averages": [_round(v) for v in trend.rolling_averages],
+                "rolling_averages": [
+                    _round(v) for v in trend.rolling_averages
+                ],
                 "direction": trend.direction,
             }
             for trend in per_student

@@ -96,26 +96,34 @@ def iter_records(path: PathInput) -> Iterator[GradeRecord]:
     csv_path = _to_path(path)
     # Windows reports directories as PermissionError, so check explicitly.
     if csv_path.is_dir():
-        raise DataFileError(f"Expected a file but found a directory: {csv_path}")
+        raise DataFileError(
+            f"Expected a file but found a directory: {csv_path}"
+        )
     try:
         with csv_path.open("r", newline="", encoding="utf-8") as handle:
             reader = csv.DictReader(handle)
-            missing = [c for c in REQUIRED_COLUMNS if c not in (reader.fieldnames or [])]
+            columns = reader.fieldnames or []
+            missing = [c for c in REQUIRED_COLUMNS if c not in columns]
             if missing:
                 raise DataFileError(
-                    f"{csv_path} is missing required columns: {', '.join(missing)}"
+                    f"{csv_path} is missing required columns: "
+                    f"{', '.join(missing)}"
                 )
             for line_number, row in enumerate(reader, start=2):
                 try:
                     yield parse_row(row)
                 except ValueError as exc:
-                    logger.warning("Skipping %s line %d: %s", csv_path, line_number, exc)
+                    logger.warning(
+                        "Skipping %s line %d: %s", csv_path, line_number, exc
+                    )
     except FileNotFoundError as exc:
         raise DataFileError(f"Input file not found: {csv_path}") from exc
     except PermissionError as exc:
         raise DataFileError(f"Permission denied reading: {csv_path}") from exc
     except UnicodeDecodeError as exc:
-        raise DataFileError(f"{csv_path} is not a valid UTF-8 text file") from exc
+        raise DataFileError(
+            f"{csv_path} is not a valid UTF-8 text file"
+        ) from exc
 
 
 def load_records(path: PathInput) -> List[GradeRecord]:
@@ -123,7 +131,9 @@ def load_records(path: PathInput) -> List[GradeRecord]:
     return list(iter_records(path))
 
 
-def write_json(data: Mapping[str, Any], path: PathInput, indent: int = 2) -> Path:
+def write_json(
+    data: Mapping[str, Any], path: PathInput, indent: int = 2
+) -> Path:
     """Write a JSON document, creating parent directories if needed.
 
     Args:
@@ -150,4 +160,3 @@ def write_json(data: Mapping[str, Any], path: PathInput, indent: int = 2) -> Pat
     except OSError as exc:
         raise DataFileError(f"Could not write {json_path}: {exc}") from exc
     return json_path.resolve()
-

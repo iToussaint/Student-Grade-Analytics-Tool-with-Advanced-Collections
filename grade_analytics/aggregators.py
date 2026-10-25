@@ -92,10 +92,14 @@ def ordered_distribution(counts: Counter[str]) -> OrderedDict[str, int]:
     insertion order, so reports use an ``OrderedDict`` to guarantee a
     stable, complete A-F layout.
     """
-    return OrderedDict((letter, counts.get(letter, 0)) for letter in LETTER_GRADES)
+    return OrderedDict(
+        (letter, counts.get(letter, 0)) for letter in LETTER_GRADES
+    )
 
 
-def group_by_major(students: Iterable[Student]) -> DefaultDict[str, List[Student]]:
+def group_by_major(
+    students: Iterable[Student],
+) -> DefaultDict[str, List[Student]]:
     """Group students by their major."""
     groups: DefaultDict[str, List[Student]] = defaultdict(list)
     for student in students:
@@ -103,7 +107,9 @@ def group_by_major(students: Iterable[Student]) -> DefaultDict[str, List[Student
     return groups
 
 
-def group_by_year(students: Iterable[Student]) -> DefaultDict[int, List[Student]]:
+def group_by_year(
+    students: Iterable[Student],
+) -> DefaultDict[int, List[Student]]:
     """Group students by their academic year."""
     groups: DefaultDict[int, List[Student]] = defaultdict(list)
     for student in students:
@@ -119,7 +125,9 @@ def scores_by_course(grades: Iterable[Grade]) -> DefaultDict[str, List[float]]:
     return scores
 
 
-def scores_by_semester(grades: Iterable[Grade]) -> DefaultDict[str, List[float]]:
+def scores_by_semester(
+    grades: Iterable[Grade],
+) -> DefaultDict[str, List[float]]:
     """Map each semester to the list of scores obtained in it."""
     scores: DefaultDict[str, List[float]] = defaultdict(list)
     for grade in grades:

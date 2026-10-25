@@ -24,7 +24,9 @@ DEFAULT_OUTPUT = Path("reports") / "grade_report.json"
 def _positive_int(value: str) -> int:
     number = int(value)
     if number < 1:
-        raise argparse.ArgumentTypeError(f"expected a positive integer, got {value}")
+        raise argparse.ArgumentTypeError(
+            f"expected a positive integer, got {value}"
+        )
     return number
 
 
@@ -32,9 +34,13 @@ def build_parser() -> argparse.ArgumentParser:
     """Create the argument parser."""
     parser = argparse.ArgumentParser(
         prog="grade_analytics",
-        description="Analyse student grades from a CSV file and write a JSON report.",
+        description=(
+            "Analyse student grades from a CSV file and write a JSON report."
+        ),
     )
-    parser.add_argument("input", type=Path, help="CSV file with one row per grade")
+    parser.add_argument(
+        "input", type=Path, help="CSV file with one row per grade"
+    )
     parser.add_argument(
         "-o",
         "--output",
@@ -72,7 +78,9 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Optional[List[str]] = None) -> int:
     """Run the tool and return a process exit code."""
     args = build_parser().parse_args(argv)
-    logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
+    logging.basicConfig(
+        level=logging.WARNING, format="%(levelname)s: %(message)s"
+    )
 
     try:
         report = build_report(

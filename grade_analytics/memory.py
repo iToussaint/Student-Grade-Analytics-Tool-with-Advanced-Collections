@@ -94,16 +94,23 @@ def compare_record_structures(count: int = 10_000) -> MemoryComparison:
     approaches: Dict[str, Callable[[], Any]] = {
         "dict": lambda: [dict(row) for row in rows],
         "dataclass": lambda: [_PlainRecord(**row) for row in rows],
-        "dataclass(slots=True)": lambda: [_SlottedRecord(**row) for row in rows],
+        "dataclass(slots=True)": lambda: [
+            _SlottedRecord(**row) for row in rows
+        ],
         "namedtuple": lambda: [GradeRecord(**row) for row in rows],
     }
     return MemoryComparison(
         task=f"Store {count:,} records",
-        results=[MemoryResult(name, measure_peak(fn)) for name, fn in approaches.items()],
+        results=[
+            MemoryResult(name, measure_peak(fn))
+            for name, fn in approaches.items()
+        ],
     )
 
 
-def compare_rolling_window(count: int = 100_000, window: int = 3) -> MemoryComparison:
+def compare_rolling_window(
+    count: int = 100_000, window: int = 3
+) -> MemoryComparison:
     """Keeping a rolling window: a growing list versus ``deque(maxlen)``."""
 
     def with_list() -> List[float]:
@@ -130,7 +137,7 @@ def compare_rolling_window(count: int = 100_000, window: int = 3) -> MemoryCompa
 
 
 def compare_file_loading(path: PathInput) -> MemoryComparison:
-    """Average score of a CSV file: load everything vs stream with a generator."""
+    """Mean score of a CSV file: load all records vs stream a generator."""
 
     def with_list() -> float:
         records: List[GradeRecord] = load_records(path)
@@ -148,7 +155,9 @@ def compare_file_loading(path: PathInput) -> MemoryComparison:
         task=f"Mean score of {path}",
         results=[
             MemoryResult("list (load_records)", measure_peak(with_list)),
-            MemoryResult("generator (iter_records)", measure_peak(with_generator)),
+            MemoryResult(
+                "generator (iter_records)", measure_peak(with_generator)
+            ),
         ],
     )
 
@@ -162,7 +171,8 @@ def format_comparisons(comparisons: List[MemoryComparison]) -> str:
         for result in comparison.results:
             ratio = result.peak_bytes / smallest
             lines.append(
-                f"  {result.approach:<28}{result.peak_bytes / 1024:>12,.1f} KiB"
+                f"  {result.approach:<28}"
+                f"{result.peak_bytes / 1024:>12,.1f} KiB"
                 f"{ratio:>8.2f}x"
             )
         lines.append("")
