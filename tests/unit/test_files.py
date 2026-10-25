@@ -17,7 +17,7 @@ from grade_analytics.io.files import (
     write_json,
 )
 
-from tests.conftest import HEADER
+from tests.helpers import HEADER
 
 
 def test_iter_records_is_a_lazy_generator(csv_file: Path) -> None:
