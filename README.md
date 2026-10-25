@@ -186,25 +186,25 @@ D | #################################### 86
 F | ############### 37
 Share -> A: 9.9%, B: 19.9%, C: 30.8%, D: 27.6%, F: 11.9%
 
-Average Score by Major
-----------------------
-Business         | ###################################### 72.76
+Average Score by Major (axis starts at 70)
+------------------------------------------
+Business         | ################### 72.76
 Computer Science | ######################################## 75.95
-Mathematics      | ###################################### 71.63
+Mathematics      | ########### 71.63
 
-Average Score by Year
----------------------
+Average Score by Year (axis starts at 60)
+-----------------------------------------
 Year 1 | ######################################## 78.06
-Year 2 | #################################### 70.14
-Year 3 | ################################### 68.27
-Year 4 | ####################################### 75.26
+Year 2 | ###################### 70.14
+Year 3 | ################## 68.27
+Year 4 | ################################## 75.26
 
-Average Score per Semester
---------------------------
-2023-S1 | ######################################## 73.29
-2023-S2 | ####################################### 72.79
+Average Score per Semester (axis starts at 70)
+----------------------------------------------
+2023-S1 | ################################## 73.29
+2023-S2 | ############################# 72.79
 2024-S1 | ######################################## 73.84
-2024-S2 | ######################################## 73.60
+2024-S2 | ##################################### 73.60
 Rolling average -> 2023-S1: 73.29, 2023-S2: 73.04, 2024-S1: 73.31, 2024-S2: 73.41
 
 Top Performers
@@ -224,6 +224,10 @@ stable    | ############# 5
 
 Report written to .../reports/grade_report.json
 ```
+
+Grade counts and student trends are drawn from 0. Average-score charts
+start at the multiple of 10 just below the lowest average, as the chart
+title states, so that small differences between groups stay visible.
 
 ## JSON Report Examples
 
@@ -420,7 +424,7 @@ Key takeaways:
 ## Testing and Type Checking
 
 ```bash
-python -m pytest          # 95 tests
+python -m pytest          # 101 tests
 python -m mypy            # strict mode: grade_analytics, scripts, tests
 ```
 
